@@ -1,0 +1,7 @@
+{
+  "name": "AppGimVenum",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
