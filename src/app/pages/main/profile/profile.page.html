@@ -1,0 +1,114 @@
+
+  <app-header backButton="/main/home" title="Perfil"></app-header>
+
+
+
+<!-- Contenido principal -->
+
+  <ion-content id="main-content" class="ion-padding">
+    <ion-card class="full-width-card" color="dark">
+      <ion-card-header class="icon-center">
+        <ion-icon class="big-icon" name="person-circle-outline"></ion-icon>
+        <ion-card-title class="ion-text-center"
+          >{{usuarioNombre}}</ion-card-title
+        >
+        <p>{{usuarioMembresia}}</p>
+      </ion-card-header>
+      <ion-card-content>
+        <!-- Otros datos opcionales -->
+      </ion-card-content>
+    </ion-card>
+
+    <!--Datos-->
+    <ion-card
+      class="full-width-card2"
+      *ngIf="usuarioMembresia == 'Administrador'"
+      detail="true"
+    >
+      <ion-item color="light">
+        <ion-label color="dark">
+          <strong><h2>Mi informacion</h2></strong>
+        </ion-label>
+      </ion-item>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6">
+            <ion-card class="info-card">
+              <ion-card-header>
+                <ion-card-title color="danger"
+                  ><strong> {{usuarioEmail}}</strong>
+                </ion-card-title>
+              </ion-card-header>
+              <ion-card-content><strong>Email</strong> </ion-card-content>
+            </ion-card>
+          </ion-col>
+
+          <ion-col size="6">
+            <ion-card class="info-card">
+              <ion-card-header>
+                <ion-card-title color="danger">
+                  <strong>{{usuarioMesesIns}}</strong>
+                </ion-card-title>
+              </ion-card-header>
+              <ion-card-content
+                ><strong>Meses inscrito</strong></ion-card-content
+              >
+            </ion-card>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="6">
+            <ion-card class="info-card">
+              <ion-card-header>
+                <ion-card-title color="danger"
+                  ><strong>{{ usuarioInscripcion }}</strong>
+                </ion-card-title>
+              </ion-card-header>
+              <ion-card-content
+                ><strong>Fecha de Inscripcion</strong></ion-card-content
+              >
+            </ion-card>
+          </ion-col>
+
+          <ion-col size="6">
+            <ion-card class="info-card">
+              <ion-card-header>
+                <ion-card-title color="danger"
+                  ><strong>{{ usuarioFinalizacion }} </strong>
+                </ion-card-title>
+              </ion-card-header>
+              <ion-card-content
+                ><strong>Fecha de Finalizacion</strong></ion-card-content
+              >
+            </ion-card>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="6">
+            <ion-card class="info-card">
+              <ion-card-header>
+                <ion-card-title color="danger"
+                  ><strong>{{ usuarioGenero }} </strong>
+                </ion-card-title>
+              </ion-card-header>
+              <ion-card-content><strong>Genero</strong></ion-card-content>
+            </ion-card>
+          </ion-col>
+
+          <ion-col size="6">
+            <ion-card class="info-card">
+              <ion-card-header>
+                <ion-card-title color="danger"
+                  ><strong> {{usuarioEdad}} años</strong>
+                </ion-card-title>
+              </ion-card-header>
+              <ion-card-content><strong>Edad</strong> </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+  </ion-content>

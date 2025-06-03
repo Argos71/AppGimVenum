@@ -1,0 +1,15 @@
+export interface User{
+    uid: string, 
+    email: string,
+    password: string,
+    nombre: string,
+    edad: string,
+    FechaInscripcion: string,
+    FechaFinalizacion: string,
+    genero: string,
+    peso: string,
+    estatura: string,
+    planNutricional: string,
+    mesesInscripcion: string,
+    tipoMembresia: 'Inscrito' | 'Administrador',
+}

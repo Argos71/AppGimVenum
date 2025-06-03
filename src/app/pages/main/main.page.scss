@@ -1,0 +1,33 @@
+.custom-select-wrapper {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid var(--ion-color-danger);
+  border-radius: 18px;
+  padding: 3px 0px 3px 17px; /* arriba, derecha, abajo, izquierda */
+  gap: 33px;
+}
+
+.custom-select-wrapper ion-icon {
+  color: var(--ion-color-danger);
+  font-size: 23px;
+}
+
+.custom-select-wrapper ion-select {
+  flex: 1;
+  --padding-start: 0;
+  --background: transparent;
+  --border-width: 0;
+}
+
+.custom-label {
+  position: absolute;
+  top: -10px;
+  left: 12px;
+  background: white;
+  padding: 0 4px;
+  font-size: 12px;
+  color: var(--ion-color-danger);
+  font-weight: 600;
+  pointer-events: none;
+  user-select: none;
+}

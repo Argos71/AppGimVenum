@@ -1,0 +1,215 @@
+<div class="home-page-header-wrapper">
+  <ion-buttons slot="start" class="header-button left">
+    <ion-button fill="clear" (click)="openLeftMenu()">
+      <ion-icon slot="icon-only" name="menu-outline"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+
+  <app-header title="Inicio"></app-header>
+
+  <ion-buttons slot="end" class="header-button right">
+    <ion-button fill="clear" (click)="openRightMenu()">
+      <ion-icon slot="icon-only" name="options-outline"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+</div>
+
+<!-- Menú izquierdo -->
+<ion-menu side="start" menuId="left-menu" contentId="main-content">
+  <ion-header>
+    <ion-toolbar color="danger">
+      <ion-title>Menú</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">
+    <!-- Ver Perfil -->
+    <ion-item button menuClose (click)="verPerfil()" color="light">
+      <ion-icon slot="start" name="person-circle-outline"></ion-icon>
+      <ion-label>Perfil</ion-label>
+    </ion-item>
+
+    <!-- Ver Usuarios -->
+    <ion-item button menuClose (click)="goProfile()" color="light">
+      <ion-icon slot="start" name="people-outline"></ion-icon>
+      <ion-label>Ver Usuarios</ion-label>
+    </ion-item>
+
+    <!-- Editar Usuarios -->
+    <ion-item
+      *ngIf="usuarioMembresia == 'Administrador'"
+      detail="true"
+      button
+      menuClose
+      (click)="editarUsuarios()"
+      color="light"
+    >
+      <ion-icon slot="start" name="create-outline"></ion-icon>
+      <ion-label>Editar Usuarios</ion-label>
+    </ion-item>
+
+    <!-- Sacar Reportes -->
+    <ion-item
+      *ngIf="usuarioMembresia == 'Administrador'"
+      detail="true"
+      button
+      menuClose
+      (click)="sacarReportes()"
+      color="light"
+    >
+      <ion-icon slot="start" name="document-text-outline"></ion-icon>
+      <ion-label>Reportes</ion-label>
+    </ion-item>
+
+    <!-- Configuración -->
+    <ion-item
+      *ngIf="usuarioMembresia == 'Administrador'"
+      detail="true"
+      button
+      menuClose
+      (click)="goToSignUp()"
+      color="light"
+    >
+      <ion-icon slot="start" name="settings-outline"></ion-icon>
+      <ion-label>Agregar usuario</ion-label>
+    </ion-item>
+
+    <!-- Cerrar sesión -->
+    <ion-item button menuClose (click)="signOut()" color="light">
+      <ion-icon slot="start" name="log-out-outline"></ion-icon>
+      <ion-label>Cerrar Sesión</ion-label>
+    </ion-item>
+  </ion-content>
+</ion-menu>
+
+<!-- ================Menú derecho - Opciones de usuario===========-->
+<ion-menu  side="end" menuId="right-menu" contentId="main-content">
+  <ion-header>
+    <ion-toolbar color="danger">
+      <ion-title>Opciones de usuario</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content  class="ion-padding">
+    <ion-item color="dark" lines="full">
+      <ion-label><strong>👋 Hola, {{ usuarioNombre }}</strong></ion-label>
+    </ion-item>
+
+    <!-- Perfil del usuario -->
+    <ion-item button (click)="goProfile()" color="dark">
+      <ion-icon slot="start" name="person-circle-outline"></ion-icon>
+      <ion-label>Perfil</ion-label>
+    </ion-item>
+
+    <!-- Contactos -->
+    <ion-item button (click)="goContactos()" color="dark">
+      <ion-icon slot="start" name="people-outline"></ion-icon>
+      <ion-label>Contactos</ion-label>
+    </ion-item>
+   
+
+    <!-- Cerrar Sesión -->
+    <ion-button
+      expand="block"
+      color="danger"
+      class="ion-margin-top"
+      (click)="signOut()"
+    >
+      <ion-icon slot="start" name="log-out-outline"></ion-icon>
+      Cerrar Sesión
+    </ion-button>
+  </ion-content>
+</ion-menu>
+
+<!-- Contenido principal -->
+
+
+  <ion-content id="main-content" class="ion-padding">
+    <ion-card class="full-width-card" color="dark">
+       <ion-item color="light">
+        <ion-label color="dark">
+          <strong><h2>Dias Asistidos</h2></strong>
+        </ion-label>
+      </ion-item>
+      <ion-card-content >
+        <ion-grid>
+          <ion-row class="week-row" justify-content-center>
+            <ion-col *ngFor="let day of week" size="auto">
+              <div [ngClass]="{'day-box': true, 'today': day.isToday}">
+                {{ day.name }}
+                <p></p>
+                {{ day.date }}
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+
+   <!--Datos-->
+    <ion-card class="full-width-card2" *ngIf="usuarioMembresia == 'Administrador'" detail="true">
+       <ion-item color="light">
+        <ion-label color="dark">
+          <strong><h2>Tus datos principales</h2></strong>
+        </ion-label>
+      </ion-item>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6">
+            <ion-card class="info-card">
+              <ion-card-header>
+                <ion-card-title color="danger"><strong>{{usuarioTalla}} cm</strong>  </ion-card-title>
+              </ion-card-header>
+              <ion-card-content><strong>Estatura</strong></ion-card-content>
+            </ion-card>
+          </ion-col>
+
+          <ion-col size="6">
+            <ion-card class="info-card">
+              <ion-card-header>
+                <ion-card-title color="danger"> <strong>{{usuarioPeso}} Kg</strong> </ion-card-title>
+              </ion-card-header>
+              <ion-card-content><strong>Peso</strong></ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="6">
+            <ion-card class="info-card">
+              <ion-card-header>
+                <ion-card-title color="danger"><strong>{{UsuarioImc}} </strong> </ion-card-title>
+              </ion-card-header>
+              <ion-card-content><strong>IMC</strong></ion-card-content>
+            </ion-card>
+          </ion-col>
+
+          <ion-col size="6">
+            <ion-card class="info-card">
+              <ion-card-header>
+                <ion-card-title color="danger"><strong> {{UsuarioVasos}}</strong> </ion-card-title>
+              </ion-card-header>
+              <ion-card-content><strong>Vasos de agua</strong><p></p>(1 vaso = 250 ml)</ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+
+
+    <ion-card class="full-width-card" color="dark">
+       <ion-item color="light">
+        <ion-label color="dark">
+          <strong><h2>Areas que puedes trabajar</h2></strong>
+        </ion-label>
+      </ion-item>
+      <ion-card-content>
+      <ion-button class="ion-padding" (click)="goCategoria()" size="large" color="light" expand="block" shape="round">
+        Ver Areas
+      </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </ion-content>
+
+ 
+

@@ -1,0 +1,271 @@
+<app-header backButton="/auth" title="Registrar usuario"></app-header>
+
+<ion-content>
+  <div class="d-flex-center">
+    <form
+      [formGroup]="form"
+      class="auth-form"
+      (ngSubmit)="submit()"
+      (keypress.enter)="submit()"
+    >
+      <app-logo></app-logo>
+
+      <!--NOMBRE-->
+      <app-custom-input
+        autocomplete="nombre"
+        icon="person-outline"
+        [control]="form.controls.nombre"
+        type="text"
+        label="Nombres"
+      ></app-custom-input>
+
+      <div
+        class="validators"
+        *ngIf="form.controls.nombre.errors && form.controls.nombre.touched"
+      >
+        <div *ngIf="form.controls.nombre.errors?.['required']">
+          El nombre es requerido
+        </div>
+        <div *ngIf="form.controls.nombre.errors?.['minlength']">
+          El nombre debe tener al menos 4 caracteres
+        </div>
+      </div>
+
+      <!--EMAIL-->
+      <app-custom-input
+        autocomplete="email"
+        icon="mail-outline"
+        [control]="form.controls.email"
+        type="email"
+        label="Correo"
+      ></app-custom-input>
+
+      <div
+        class="validators"
+        *ngIf="form.controls.email.errors && form.controls.email.touched"
+      >
+        <div *ngIf="form.controls.email.errors?.['required']">
+          El correo es requerido
+        </div>
+        <div *ngIf="form.controls.email.errors?.['email']">
+          Ingrese un correo válido
+        </div>
+      </div>
+
+      <!--CONTRASENA-->
+      <app-custom-input
+        icon="lock-closed-outline"
+        [control]="form.controls.password"
+        type="password"
+        label="Contraseña"
+      ></app-custom-input>
+
+      <div
+        class="validators"
+        *ngIf="form.controls.password.errors && form.controls.password.touched"
+      >
+        <div *ngIf="form.controls.password.errors?.['required']">
+          La contraseña es requerida
+        </div>
+      </div>
+      
+<!--Genero-->
+
+      <div class="custom-select-wrapper">
+        <ion-icon name="transgender-outline"></ion-icon>
+        <ion-select
+          label="Genero"
+          color="danger"
+          fill="outline"
+          [formControl]="form.controls.genero"
+          interface="popover"
+        >
+          <ion-select-option value="Masculino">Masculino</ion-select-option>
+          <ion-select-option value="Femenino">Femenino</ion-select-option>
+        </ion-select>
+      </div>
+
+      <div
+        class="validators"
+        *ngIf="form.controls.genero.errors && form.controls.genero.touched"
+      >
+        <div *ngIf="form.controls.genero.errors?.['required']">
+          El género es requerido
+        </div>
+      </div>
+      <!-- EDAD -->
+      <app-custom-input
+        icon="calendar-outline"
+        [control]="form.controls.edad"
+        type="number"
+        label="Edad"
+      >
+      </app-custom-input>
+      <div
+        class="validators"
+        *ngIf="form.controls.edad.errors && form.controls.edad.touched"
+      >
+        <div *ngIf="form.controls.edad.errors?.['required']">
+          La edad es requerida
+        </div>
+      </div>
+
+      
+
+      <!-- Tipo de Membresía -->
+<div class="custom-select-wrapper">
+  <ion-icon name="card-outline"></ion-icon>
+  <ion-select
+    label="Tipo de membresía"
+    color="danger"
+    fill="outline"
+    [formControl]="form.controls.tipoMembresia"
+    interface="popover"
+  >
+    <ion-select-option value="Inscrito">Inscrito</ion-select-option>
+    <ion-select-option value="Administrador">Administrador</ion-select-option>
+
+  </ion-select>
+</div>
+
+<div
+  class="validators"
+  *ngIf="form.controls.tipoMembresia.errors && form.controls.tipoMembresia.touched"
+>
+  <div *ngIf="form.controls.tipoMembresia.errors?.['required']">
+    El tipo de membresía es requerido
+  </div>
+</div>
+
+      
+      
+
+      <!-- FECHA INSCRIPCIÓN -->
+      <app-custom-input
+        icon="calendar-outline"
+        [control]="form.controls.FechaIncripcion"
+        type="date"
+        label="Fecha de inscripción"
+        (input)="calcularFechaFinalizacion()"
+      >
+      </app-custom-input>
+      <div
+        class="validators"
+        *ngIf="form.controls.FechaIncripcion.errors && form.controls.FechaIncripcion.touched"
+      >
+        <div *ngIf="form.controls.FechaIncripcion.errors?.['required']">
+          La fecha es requerida
+        </div>
+      </div>
+
+      <!-- MESES DE INSCRIPCIÓN -->
+      <app-custom-input
+        icon="calendar-number-outline"
+        [control]="form.controls.mesesInscripcion"
+        type="number"
+        label="Meses de inscripción"
+        (input)="calcularFechaFinalizacion()"
+        min="1"
+      >
+      </app-custom-input>
+      <div
+        class="validators"
+        *ngIf="form.controls.mesesInscripcion.errors && form.controls.mesesInscripcion.touched"
+      >
+        <div *ngIf="form.controls.mesesInscripcion.errors?.['required']">
+          La cantidad de meses es requerida
+        </div>
+        <div *ngIf="form.controls.mesesInscripcion.errors?.['min']">
+          Debe ser al menos 1 mes
+        </div>
+      </div>
+
+      <!-- FECHA FINALIZACIÓN (solo lectura) -->
+      <app-custom-input
+        icon="calendar-outline"
+        [control]="form.controls.FechaFinalizacion"
+        type="date"
+        label="Fecha de finalización"
+        [readonly]="true"
+      >
+      </app-custom-input>
+
+      
+
+      <!-- PESO -->
+      <app-custom-input
+        icon="fitness-outline"
+        [control]="form.controls.peso"
+        type="number"
+        label="Peso (kg)"
+      >
+      </app-custom-input>
+      <div
+        class="validators"
+        *ngIf="form.controls.peso.errors && form.controls.peso.touched"
+      >
+        <div *ngIf="form.controls.peso.errors?.['required']">
+          El peso es requerido
+        </div>
+      </div>
+
+      <!-- ESTATURA -->
+      <app-custom-input
+        icon="body-outline"
+        [control]="form.controls.estatura"
+        type="number"
+        label="Estatura (cm)"
+      >
+      </app-custom-input>
+      <div
+        class="validators"
+        *ngIf="form.controls.estatura.errors && form.controls.estatura.touched"
+      >
+        <div *ngIf="form.controls.estatura.errors?.['required']">
+          La estatura es requerida
+        </div>
+      </div>
+
+      <!-- PLAN NUTRICIONAL -->
+      <app-custom-input
+        icon="restaurant-outline"
+        [control]="form.controls.planNutricional"
+        type="text"
+        label="Plan nutricional"
+      >
+      </app-custom-input>
+      <div
+        class="validators"
+        *ngIf="form.controls.planNutricional.errors && form.controls.planNutricional.touched"
+      >
+        <div *ngIf="form.controls.planNutricional.errors?.['required']">
+          El plan nutricional es requerido
+        </div>
+      </div>
+
+      <!--Boton de registrar-->
+      <ion-button
+        color="danger"
+        expand="block"
+        mode="ios"
+        class="submit"
+        type="submit"
+        [disabled]="form.invalid"
+      >
+        Registrate
+        <ion-icon slot="end" name="person-add-outline"></ion-icon>
+      </ion-button>
+
+      <!-- <ion-button class="ion-margin-top" routerLink="/auth/sign-up"  color="danger" expand="block" mode="ios"  fill="outline">
+      Registrate
+      <ion-icon slot="end" name="person-add-outline"></ion-icon>
+     </ion-button>
+     -->
+      <!--Permite verificar si existe entrada 
+              {{form.value.email}}
+ 
+         {{form.value.password}}
+                  {{form.value | json}}-->
+    </form>
+  </div>
+</ion-content>

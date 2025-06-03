@@ -1,0 +1,105 @@
+<app-header title="Inicio de Sesion"></app-header>
+
+<ion-content>
+
+  <div class="d-flex-center">
+    <form
+      [formGroup]="form"
+      class="auth-form"
+      (ngSubmit)="submit()"
+      (keypress.enter)="submit()"
+    >
+      
+      <div>
+      <ion-card class="full-width-card3">
+      <ion-card-content>
+      <app-logo></app-logo>
+      <app-custom-input
+        autocomplete="email"
+        icon="mail-outline"
+        [control]="form.controls.email"
+        type="email"
+        label="Correo"
+      ></app-custom-input>
+     
+      <!--EMAIL-->
+      <div
+        class="validators"
+        *ngIf="form.controls.email.errors && form.controls.email.touched"
+      >
+        <div *ngIf="form.controls.email.errors?.['required']">
+          <ion-text color="light">
+            <h6>El correo es requerido</h6>
+          </ion-text>
+        </div>
+        <div *ngIf="form.controls.email.errors?.['email']">
+          <ion-text color="light">
+            <h6>Ingrese un correo valido</h6>
+          </ion-text>
+        </div>
+      </div>
+
+      <app-custom-input
+        icon="lock-closed-outline"
+        [control]="form.controls.password"
+        type="password"
+        label="Contraseña"
+      ></app-custom-input>
+
+      <!--CONTRASENA-->
+      <div
+        class="validators"
+        *ngIf="form.controls.password.errors && form.controls.password.touched"
+      >
+        <div *ngIf="form.controls.password.errors?.['required']">
+         <ion-text color="light">
+            <h6>El contraseña es requerida</h6>
+          </ion-text>
+        </div>
+      </div>
+
+      <ion-text (click)="goToForgotPassword()" class="ion-text-end" color="light">
+            <h6>¿Olvidaste tu contraseña?</h6>
+          </ion-text>
+
+      <ion-button
+        color="danger"
+        expand="block"
+        mode="ios"
+        class="submit"
+        type="submit"
+        [disabled]="form.invalid"
+      >
+        Ingresar
+        <ion-icon slot="end" name="log-in-outline"></ion-icon>
+      </ion-button>
+
+      <ion-button
+        class="ion-margin-top"
+        (click)="goToSignUp()"
+        color="light"
+        expand="block"
+        mode="ios"
+        fill="solid"
+      >
+        Registrate
+        <ion-icon color="danger" slot="end" name="person-add-outline"></ion-icon>
+      </ion-button>
+         </ion-card-content>
+    </ion-card>
+  </div>
+
+      <!-- <ion-button class="ion-margin-top" routerLink="/auth/sign-up"  color="danger" expand="block" mode="ios"  fill="outline">
+      Registrate
+      <ion-icon slot="end" name="person-add-outline"></ion-icon>
+     </ion-button>
+     -->
+      <!--Permite verificar si existe entrada 
+              {{form.value.email}}
+ 
+         {{form.value.password}}
+                  {{form.value | json}}-->
+    </form>
+  </div>
+
+</ion-content>

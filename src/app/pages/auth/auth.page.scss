@@ -1,0 +1,24 @@
+.form-container {
+  width: 90%;
+  max-width: 500px;
+  margin: 0 auto; /* Esto centra el contenido horizontalmente */
+  padding: 20px 0;
+}
+
+ion-card {
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(255, 0, 0, 0.1);
+}
+
+ion-item {
+  margin-bottom: 16px;
+}
+
+.colored-card {
+  background-color: #ffffff; /* Amarillo claro */
+  max-width: 500px;
+  margin: 20px auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
