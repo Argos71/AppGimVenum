@@ -7,7 +7,8 @@ const routes: Routes = [
   {
     path: '',
     component: MainPage
-  },  {
+  },
+  {
     path: 'home',
     loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
   },
@@ -27,15 +28,7 @@ const routes: Routes = [
     path: 'categoria-entrenamientos',
     loadChildren: () => import('./categoria-entrenamientos/categoria-entrenamientos.module').then( m => m.CategoriaEntrenamientosPageModule)
   },
-  {
-    path: 'areas-principiante',
-    loadChildren: () => import('./areas-principiante/areas-principiante.module').then( m => m.AreasPrincipiantePageModule)
-  },
-  {
-    path: 'areas-intermedio',
-    loadChildren: () => import('./areas-intermedio/areas-intermedio.module').then( m => m.AreasIntermedioPageModule)
-  },
-  {
+    {
     path: 'area-pecho',
     loadChildren: () => import('./area-pecho/area-pecho.module').then( m => m.AreaPechoPageModule)
   },

@@ -1,41 +1,78 @@
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoadingController, ToastController, ToastOptions } from '@ionic/angular';
-
+import {
+  LoadingController,
+  ModalController,
+  ModalOptions,
+  ToastController,
+  ToastOptions,
+} from '@ionic/angular';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UtilsService {
-
   loadingCtrl = inject(LoadingController);
   toastCtrl = inject(ToastController);
-  router = inject(Router)
+  modalCtrl = inject(ModalController);
+  router = inject(Router);
 
-  //==========Loading============
-  loading(){
-    return this.loadingCtrl.create({ spinner: 'crescent'})
+  async takePicture(promptLabelHeader: string) {
+    return await Camera.getPhoto({
+      quality: 90,
+      allowEditing: true,
+      resultType: CameraResultType.DataUrl,
+      source: CameraSource.Prompt,
+      promptLabelHeader: 'Seleccione fuente de la imagen',
+      promptLabelPhoto: 'Usar cámara',
+      promptLabelPicture: 'Seleccionar de galería',
+      promptLabelCancel: 'Cancelar',
+    });
   }
 
+  async presentModal(opts?: ModalOptions) {
+    // Wrapper compatible: delega en presentModalComponent para no romper llamadas existentes
+    // Devuelve la misma información que onWillDismiss del modal (si existe)
+    return await this.presentModalComponent(opts as ModalOptions);
+  }
 
-  //==========Toast===========  
-  async presentToast(opts?: ToastOptions){
+  //==========Loading============
+  loading() {
+    return this.loadingCtrl.create({ spinner: 'crescent' });
+  }
+
+  //==========Toast===========
+  async presentToast(opts?: ToastOptions) {
     const toast = await this.toastCtrl.create(opts);
     toast.present();
   }
 
   //=================Enruta a cualquier pagina disponible
-  routerLink(url: string){
-    return this.router.navigateByUrl(url)
+  routerLink(url: string) {
+    return this.router.navigateByUrl(url);
   }
 
   //=================Guarda un elemento en localstorage====
-  saveInLocalStorage(key: string, value: any){
-   return localStorage.setItem(key, JSON.stringify(value)) 
+  saveInLocalStorage(key: string, value: any) {
+    return localStorage.setItem(key, JSON.stringify(value));
   }
-
 
   //============Obtiene un elemento desde localstorage====
-  getFromLocalStorage(key: string){
-    return JSON.parse(localStorage.getItem(key))
+  getFromLocalStorage(key: string) {
+    return JSON.parse(localStorage.getItem(key));
   }
+
+  //============ Modal ============
+  async presentModalComponent(opts: ModalOptions) {
+    const modal = await this.modalCtrl.create(opts);
+    await modal.present();
+
+    const { data } = await modal.onWillDismiss();
+    if (data) return data;
+  }
+  dismissModal(data?: any) {
+    return this.modalCtrl.dismiss(data);
+  }
+
+  
 }

@@ -3,8 +3,8 @@ import { IonHeader, IonTitle } from '@ionic/angular/standalone';
 import { IonicModule } from '@ionic/angular'; // <== IMPORTANTE
 import { UtilsService } from 'src/app/services/utils.service';
 import { FirebaseService } from 'src/app/services/firebase.service';
-import { SharedModule } from "../../../shared/shared.module";
-import { HeaderComponent } from "../../../shared/components/header/header.component";
+import { SharedModule } from '../../../shared/shared.module';
+import { HeaderComponent } from '../../../shared/components/header/header.component';
 import {
   FormControl,
   FormGroup,
@@ -15,6 +15,7 @@ import { MenuController } from '@ionic/angular';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { User } from 'src/app/models/user.model';
 import { Router } from '@angular/router';
+import { EdiusuComponent } from 'src/app/shared/components/ediusu/ediusu.component';
 
 @Component({
   selector: 'app-home',
@@ -22,12 +23,9 @@ import { Router } from '@angular/router';
   templateUrl: './home.page.html',
   imports: [IonicModule, SharedModule],
 })
-
 export class HomePage implements OnInit {
-
-   week: { name: string; date: string; isToday: boolean }[] = [];
+  week: { name: string; date: string; isToday: boolean }[] = [];
   dayNames: string[] = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
-
 
   form = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -38,21 +36,22 @@ export class HomePage implements OnInit {
   utilsSvc = inject(UtilsService);
 
   //================Variables=========================
-    usuarioNombre: string = '';
-    usuarioMembresia: string = '';
-    usuarioPeso: number = 0;
-    usuarioTalla: number = 0;
-    UsuarioImc: number = 0;
-    UsuarioVasos: number = 0;
+  usuarioNombre: string = '';
+  usuarioMembresia: string = '';
+  usuarioPeso: number = 0;
+  usuarioTalla: number = 0;
+  UsuarioImc: number = 0;
+  UsuarioVasos: number = 0;
 
-//==================Constructor======================
-   constructor(private menuCtrl: MenuController,
+  //==================Constructor======================
+  constructor(
+    private menuCtrl: MenuController,
     private afAuth: AngularFireAuth,
-    private router: Router) {}
-    ngOnInit() {
-
-//===================Calculadora de Fecha=======================
-const today = new Date();
+    private router: Router
+  ) {}
+  ngOnInit() {
+    //===================Calculadora de Fecha=======================
+    const today = new Date();
     const currentDayIndex = today.getDay();
 
     // Primer día de la semana (domingo)
@@ -72,19 +71,18 @@ const today = new Date();
       this.week.push({
         name: this.dayNames[date.getDay()],
         date: formattedDate,
-        isToday:
-          date.toDateString() === today.toDateString(), // resaltar si es hoy
+        isToday: date.toDateString() === today.toDateString(), // resaltar si es hoy
       });
     }
-  
+
     //========================Calculadora de IMC=====================
-    this.afAuth.authState.subscribe(user => {
+    this.afAuth.authState.subscribe((user) => {
       if (user) {
         const uid = user.uid;
         const path = `users/${uid}`;
         this.firebaseSvc.getDocument(path).then((userData: User) => {
           this.usuarioNombre = userData?.nombre || 'Usuario';
-          this.usuarioMembresia = userData?.tipoMembresia|| 'Usuario';
+          this.usuarioMembresia = userData?.tipoMembresia || 'Usuario';
           this.usuarioPeso = Number(userData?.peso);
           this.usuarioTalla = Number(userData?.estatura);
           this.calcularIMC();
@@ -94,8 +92,14 @@ const today = new Date();
     });
   }
 
-
   //==========================Rutas==============================
+
+  goUsuarios() {
+    this.router.navigate(['/main/home/usuarios']); // <- uso correcto de this.router
+  }
+  goEdiUsuarios() {
+    this.utilsSvc.presentModal({ component: EdiusuComponent });
+  }
   goToSignUp() {
     this.router.navigate(['/main']); // <- uso correcto de this.router
   }
@@ -112,7 +116,10 @@ const today = new Date();
   //===================Calculadora de IMC=====================
   calcularIMC() {
     const alturaMetros = this.usuarioTalla / 100;
-    this.UsuarioImc = +(this.usuarioPeso / (alturaMetros * alturaMetros)).toFixed(2);
+    this.UsuarioImc = +(
+      this.usuarioPeso /
+      (alturaMetros * alturaMetros)
+    ).toFixed(2);
   }
 
   calcularVasos() {
@@ -120,105 +127,114 @@ const today = new Date();
     this.UsuarioVasos = Math.round(mlPorDia / 250);
   }
 
+  //borrador
+  verPerfil() {
+    this.menuCtrl.close();
+    this.utilsSvc.routerLink('srcapppagesmainprofile');
+  }
 
- 
-//borrador
-verPerfil() {
-  this.menuCtrl.close();
-  this.utilsSvc.routerLink('src\app\pages\main\profile');
-}
+  verAreas() {
+    this.menuCtrl.close();
+    this.utilsSvc.routerLink('srcapppagesmainprofile');
+  }
 
-verAreas() {
-  this.menuCtrl.close();
-  this.utilsSvc.routerLink('src\app\pages\main\profile');
-}
+  verUsuarios() {
+    this.menuCtrl.close();
+    this.utilsSvc.routerLink('/admin/usuarios');
+  }
 
-verUsuarios() {
-  this.menuCtrl.close();
-  this.utilsSvc.routerLink('/admin/usuarios');
-}
+  editarUsuarios() {
+    this.menuCtrl.close();
+    this.utilsSvc.routerLink('/admin/editar-usuarios');
+  }
 
-editarUsuarios() {
-  this.menuCtrl.close();
-  this.utilsSvc.routerLink('/admin/editar-usuarios');
-}
+  sacarReportes() {
+    this.menuCtrl.close();
+    this.utilsSvc.routerLink('/admin/reportes');
+  }
 
-sacarReportes() {
-  this.menuCtrl.close();
-  this.utilsSvc.routerLink('/admin/reportes');
-}
-
-
-//fin borrador
-
-
+  //fin borrador
 
   abrirConfiguracion() {
-  this.utilsSvc.routerLink('/profile');
-}
+    this.utilsSvc.routerLink('/profile');
+  }
   openMenu() {
-      this.menuCtrl.close(); // 👈 Cierra el menú
+    this.menuCtrl.close(); // 👈 Cierra el menú
     this.menuCtrl.open('main-menu');
   }
-   openLeftMenu() {
-      this.menuCtrl.close(); // 👈 Cierra el menú
+  openLeftMenu() {
+    this.menuCtrl.close(); // 👈 Cierra el menú
     this.menuCtrl.open('left-menu');
   }
 
   openRightMenu() {
-      this.menuCtrl.close(); // 👈 Cierra el menú
+    this.menuCtrl.close(); // 👈 Cierra el menú
     this.menuCtrl.open('right-menu');
   }
 
   signOut() {
-      this.menuCtrl.close(); // 👈 Cierra el menú
-
     this.firebaseSvc.signOut();
+    this.menuCtrl.close(); // 👈 Cierra el menú
   }
-  
-  
-   async getUserInfo(uid: string) {
-      if (this.form.valid) {
-  
-        const loading = await this.utilsSvc.loading();
-        await loading.present();
-  
-        let path = `users/${uid}`;
 
 
-        
-        this.firebaseSvc
-          .getDocument(path)
-          .then((user: User) => {
-            
-            
-            this.utilsSvc.saveInLocalStorage('user', user);
-            this.utilsSvc.routerLink('/main/home');
-            this.form.reset();
-  
-             this.utilsSvc.presentToast({
-              message: `Te damos la bienvenida ${user?.nombre || 'usuario'}`,
-              duration: 1500,
-              color: 'danger',
-              position: 'middle',
-              icon: 'person-circle-outline',
-            });
-  
-          })
-          .catch((error) => {
-            console.log(error);
-  
-            this.utilsSvc.presentToast({
-              message: error.message,
-              duration: 2500,
-              color: 'danger',
-              position: 'middle',
-              icon: 'alert-circle-outline',
-            });
-          })
-          .finally(() => {
-            loading.dismiss();
+  user(): User{
+    return this.utilsSvc.getFromLocalStorage('user')
+  }
+
+  //=========== Obtener Usuarios ===========
+  //getUsuarios() {
+    //this.firebaseSvc.getCollectionData('users').subscribe((users: any[]) => {
+      //this.usuarios = users;
+  //  });
+  //}
+
+  //=================== Actualiza la informacion del usuario =====================
+
+  AddUsuarios( user?: User) {
+    this.utilsSvc.presentModal({
+      component: EdiusuComponent,
+      cssClass: 'ediusu-modal-class',
+      componentProps: { user },
+    });
+  }
+
+  async getUserInfo(uid: string) {
+    if (this.form.valid) {
+      const loading = await this.utilsSvc.loading();
+      await loading.present();
+
+      let path = `users/${uid}`;
+
+      this.firebaseSvc
+        .getDocument(path)
+        .then((user: User) => {
+          this.utilsSvc.saveInLocalStorage('user', user);
+          this.utilsSvc.routerLink('/main/home');
+          this.form.reset();
+
+          this.utilsSvc.presentToast({
+            message: `Te damos la bienvenida ${user?.nombre || 'usuario'}`,
+            duration: 1500,
+            color: 'danger',
+            position: 'middle',
+            icon: 'person-circle-outline',
           });
-      }
+        })
+        .catch((error) => {
+          console.log(error);
+
+          this.utilsSvc.presentToast({
+            message: error.message,
+            duration: 2500,
+            color: 'danger',
+            position: 'middle',
+            icon: 'alert-circle-outline',
+          });
+        })
+        .finally(() => {
+          loading.dismiss();
+        });
     }
+  }
 }

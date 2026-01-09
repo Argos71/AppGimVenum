@@ -6,7 +6,6 @@
       [formGroup]="form"
       class="auth-form"
       (ngSubmit)="submit()"
-      (keypress.enter)="submit()"
     >
       <app-logo></app-logo>
 
@@ -22,6 +21,8 @@
       <div
         class="validators"
         *ngIf="form.controls.nombre.errors && form.controls.nombre.touched"
+        role="alert"
+        aria-live="polite"
       >
         <div *ngIf="form.controls.nombre.errors?.['required']">
           El nombre es requerido
@@ -43,6 +44,8 @@
       <div
         class="validators"
         *ngIf="form.controls.email.errors && form.controls.email.touched"
+        role="alert"
+        aria-live="polite"
       >
         <div *ngIf="form.controls.email.errors?.['required']">
           El correo es requerido
@@ -63,6 +66,8 @@
       <div
         class="validators"
         *ngIf="form.controls.password.errors && form.controls.password.touched"
+        role="alert"
+        aria-live="polite"
       >
         <div *ngIf="form.controls.password.errors?.['required']">
           La contraseña es requerida
@@ -72,8 +77,9 @@
 <!--Genero-->
 
       <div class="custom-select-wrapper">
-        <ion-icon name="transgender-outline"></ion-icon>
+        <ion-icon name="transgender-outline" aria-hidden="true"></ion-icon>
         <ion-select
+          aria-label="Genero"
           label="Genero"
           color="danger"
           fill="outline"
@@ -88,6 +94,8 @@
       <div
         class="validators"
         *ngIf="form.controls.genero.errors && form.controls.genero.touched"
+        role="alert"
+        aria-live="polite"
       >
         <div *ngIf="form.controls.genero.errors?.['required']">
           El género es requerido
@@ -99,11 +107,14 @@
         [control]="form.controls.edad"
         type="number"
         label="Edad"
+        min="0"
       >
       </app-custom-input>
       <div
         class="validators"
         *ngIf="form.controls.edad.errors && form.controls.edad.touched"
+        role="alert"
+        aria-live="polite"
       >
         <div *ngIf="form.controls.edad.errors?.['required']">
           La edad es requerida
@@ -114,8 +125,9 @@
 
       <!-- Tipo de Membresía -->
 <div class="custom-select-wrapper">
-  <ion-icon name="card-outline"></ion-icon>
+  <ion-icon name="card-outline" aria-hidden="true"></ion-icon>
   <ion-select
+    aria-label="Tipo de membresía"
     label="Tipo de membresía"
     color="danger"
     fill="outline"
@@ -131,6 +143,8 @@
 <div
   class="validators"
   *ngIf="form.controls.tipoMembresia.errors && form.controls.tipoMembresia.touched"
+  role="alert"
+  aria-live="polite"
 >
   <div *ngIf="form.controls.tipoMembresia.errors?.['required']">
     El tipo de membresía es requerido
@@ -152,6 +166,8 @@
       <div
         class="validators"
         *ngIf="form.controls.FechaIncripcion.errors && form.controls.FechaIncripcion.touched"
+        role="alert"
+        aria-live="polite"
       >
         <div *ngIf="form.controls.FechaIncripcion.errors?.['required']">
           La fecha es requerida
@@ -171,6 +187,8 @@
       <div
         class="validators"
         *ngIf="form.controls.mesesInscripcion.errors && form.controls.mesesInscripcion.touched"
+        role="alert"
+        aria-live="polite"
       >
         <div *ngIf="form.controls.mesesInscripcion.errors?.['required']">
           La cantidad de meses es requerida
@@ -198,11 +216,14 @@
         [control]="form.controls.peso"
         type="number"
         label="Peso (kg)"
+        min="0"
       >
       </app-custom-input>
       <div
         class="validators"
         *ngIf="form.controls.peso.errors && form.controls.peso.touched"
+        role="alert"
+        aria-live="polite"
       >
         <div *ngIf="form.controls.peso.errors?.['required']">
           El peso es requerido
@@ -215,11 +236,14 @@
         [control]="form.controls.estatura"
         type="number"
         label="Estatura (cm)"
+        min="0"
       >
       </app-custom-input>
       <div
         class="validators"
         *ngIf="form.controls.estatura.errors && form.controls.estatura.touched"
+        role="alert"
+        aria-live="polite"
       >
         <div *ngIf="form.controls.estatura.errors?.['required']">
           La estatura es requerida
@@ -237,6 +261,8 @@
       <div
         class="validators"
         *ngIf="form.controls.planNutricional.errors && form.controls.planNutricional.touched"
+        role="alert"
+        aria-live="polite"
       >
         <div *ngIf="form.controls.planNutricional.errors?.['required']">
           El plan nutricional es requerido
@@ -250,10 +276,11 @@
         mode="ios"
         class="submit"
         type="submit"
-        [disabled]="form.invalid"
+        [disabled]="form.invalid || submitting"
       >
+        <ion-spinner *ngIf="submitting" slot="start" name="crescent"></ion-spinner>
         Registrate
-        <ion-icon slot="end" name="person-add-outline"></ion-icon>
+        <ion-icon slot="end" name="person-add-outline" aria-hidden="true"></ion-icon>
       </ion-button>
 
       <!-- <ion-button class="ion-margin-top" routerLink="/auth/sign-up"  color="danger" expand="block" mode="ios"  fill="outline">

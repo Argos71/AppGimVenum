@@ -1,0 +1,277 @@
+:host {
+  display: block;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+/* ===============================
+   FONDO GENERAL Y HEADER
+=============================== */
+.usuarios-page {
+  background: linear-gradient(180deg, #0b0b0b, #1c1c1c);
+  padding-bottom: 20px;
+  min-height: 100vh;
+  color: #ffffff;
+}
+
+.header-spacer {
+  height: calc(env(safe-area-inset-top) + 64px);
+}
+
+app-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  pointer-events: auto;
+
+  ion-toolbar {
+    height: 64px;
+    min-height: 64px;
+    background: var(--ion-color-danger, #eb445a) !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+  }
+}
+
+ion-content.usuarios-page {
+  padding-top: calc(env(safe-area-inset-top) + 84px);
+}
+
+/* ===============================
+   TITULOS Y SUBTITULOS
+=============================== */
+.page-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 6px 0;
+  text-align: left;
+  color: #ffffff;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+}
+
+.subtitle {
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 10px 14px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 12px;
+  letter-spacing: 0.6px;
+  color: #ffffff;
+  text-align: left;
+  margin-bottom: 14px;
+}
+
+/* ===============================
+   GRILLA DE USUARIOS
+=============================== */
+.users-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 8px 0;
+}
+
+/* ===============================
+   TARJETA DE USUARIO
+=============================== */
+.user-card {
+  background: linear-gradient(180deg, rgb(179, 0, 0), rgba(0,0,0,0.02));
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  border: 1px solid rgba(255,255,255,0.06);
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 14px 28px rgba(225,6,0,0.25);
+  }
+
+  ion-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    gap: 12px;
+    background: rgba(225,6,0,0.05);
+  }
+
+  ion-card-content {
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: inherit;
+  }
+}
+
+/* ===============================
+   HEADER TARJETA
+=============================== */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  ion-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    background: var(--ion-color-primary, #e80000);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    ion-icon {
+      font-size: 28px;
+      color: #fff;
+    }
+  }
+
+  .title-group {
+    display: flex;
+    flex-direction: column;
+
+    .name {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .email {
+      font-size: 0.85rem;
+      color: var(--ion-color-medium, #ffffff);
+      margin: 0;
+    }
+  }
+}
+
+.header-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+
+  .uid {
+    font-size: 0.7rem;
+    color: var(--ion-color-medium-shade, #888);
+  }
+
+  .membership-chip {
+    font-weight: 700;
+    font-size: 0.8rem;
+    color: #fff;
+    background: rgba(225,6,0,0.2);
+    padding: 2px 6px;
+    border-radius: 6px;
+  }
+}
+
+/* ===============================
+   CONTENIDO TARJETA
+=============================== */
+.card-body {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.left-col, .right-col {
+  flex: 1 1 0;
+}
+
+.info-grid {
+  padding: 12px 0;
+}
+
+.info-item {
+  margin-bottom: 6px;
+  font-size: 0.9rem;
+  color: #ddd;
+
+  strong { color: #fff; }
+}
+
+.uid-block code {
+  background: rgba(255,255,255,0.05);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.78rem;
+  color: #eee;
+}
+
+.meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding-top: 8px;
+  margin-top: 8px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.card-footer {
+  margin-top: 8px;
+}
+
+/* ===============================
+   EMPTY STATE
+=============================== */
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+
+  ion-icon {
+    font-size: 48px;
+    color: var(--ion-color-medium, #999);
+  }
+
+  h3, p {
+    margin: 0.5rem 0;
+    color: #fff;
+  }
+}
+
+/* ===============================
+   TOOLBARS Y SEARCHBAR
+=============================== */
+.top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.tools ion-searchbar {
+  --background: #fff;
+  border-radius: 40px;
+  width: 100%;
+  max-width: 420px;
+}
+
+/* ===============================
+   RESPONSIVE
+=============================== */
+@media (max-width: 720px) {
+  .top-row { flex-direction: column; align-items: stretch; }
+  .tools { width: 100%; }
+  .users-grid { grid-template-columns: 1fr; gap: 12px; }
+  .card-body { flex-direction: column; }
+}
+
+@media (max-width: 480px) {
+  .page-title { font-size: 1.2rem; }
+  .avatar-icon { font-size: 38px; }
+}
+
+@media (max-width: 360px) {
+  .title-group .name { font-size: 0.98rem; }
+  .header-left ion-avatar { width: 48px; height: 48px; }
+}

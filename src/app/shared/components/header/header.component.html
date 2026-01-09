@@ -11,6 +11,10 @@
           <ion-icon name="arrow-back-outline" slot="icon-only"></ion-icon>
         </ion-button>
       </ng-template>
+
+      <ion-button (click)=" dismissModal()" *ngIf="isModal">
+        <ion-icon name="close-circle-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
 
     <ion-title>

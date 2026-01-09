@@ -1,13 +1,103 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>categoria-entrenamientos</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header
+  backButton="/main/home"
+  title="Categorías de entrenamiento"
+></app-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">categoria-entrenamientos</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="page-bg">
+
+  <!-- HERO CATEGORÍAS -->
+  <section class="hero" *ngIf="!selectedCategory">
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+      <ion-icon name="barbell-outline" class="hero-icon"></ion-icon>
+      <h1>Categorías de Entrenamiento</h1>
+      <p>
+        Elige tu nivel y comienza a entrenar con rutinas diseñadas para tu progreso.
+      </p>
+    </div>
+  </section>
+
+  <!-- CATEGORÍAS -->
+  <section
+    class="category-section"
+    *ngIf="!selectedCategory"
+  >
+    <ion-card
+      class="category-card"
+      (click)="selectCategory('Básico')"
+    >
+      <div class="card-glow"></div>
+
+      <ion-icon
+        name="fitness-outline"
+        class="category-icon"
+      ></ion-icon>
+
+      <h2>Básico</h2>
+      <p>
+        Entrenamientos para principiantes. Rutinas simples y efectivas para iniciar.
+      </p>
+    </ion-card>
+
+    <ion-card
+      class="category-card"
+      (click)="selectCategory('Intermedio')"
+    >
+      <div class="card-glow"></div>
+
+      <ion-icon
+        name="barbell-outline"
+        class="category-icon"
+      ></ion-icon>
+
+      <h2>Intermedio</h2>
+      <p>
+        Rutinas más exigentes para quienes buscan mejorar fuerza y resistencia.
+      </p>
+    </ion-card>
+  </section>
+
+  <!-- ÁREAS -->
+<section
+  class="areas-section"
+  *ngIf="selectedCategory"
+>
+  <ion-button
+    class="back-button"
+    fill="clear"
+    (click)="goBack()"
+  >
+    <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+    Volver
+  </ion-button>
+
+  <h2 class="areas-title">
+    {{ selectedCategory }}
+  </h2>
+
+  <div class="areas-wrapper">
+    <div class="areas-grid">
+      <div
+        class="area-card"
+        *ngFor="let area of areas"
+        [routerLink]="area.route"
+        [queryParams]="{ category: selectedCategory }"
+      >
+        <div class="area-content">
+          <ion-icon
+            [name]="area.icon"
+            class="area-icon"
+          ></ion-icon>
+
+          <span class="area-name">
+            {{ area.name }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
 </ion-content>

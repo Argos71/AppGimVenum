@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormControl,
@@ -15,6 +15,7 @@ import { LogoComponent } from 'src/app/shared/components/logo/logo.component';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { User } from 'src/app/models/user.model';
 import { UtilsService } from 'src/app/services/utils.service';
+import { Subscription } from 'rxjs';
 @Component({
   standalone: true,
   selector: 'app-sign-up',
@@ -51,6 +52,8 @@ export class MainPage {
     tipoMembresia: new FormControl('', [Validators.required]),
 
   });
+  submitting = false;
+  private subs: Subscription[] = [];
   constructor(private router: Router) {} // <- aquí se inyecta el router correctamente
 
   firebaseSvc = inject(FirebaseService);
@@ -86,9 +89,27 @@ export class MainPage {
   }
 }
 
+  ngOnInit(): void {
+    // Suscribirse a cambios para garantizar el cálculo aunque el componente personalizado
+    // no emita eventos DOM 'input'. Esto hace el cálculo reactivo desde el FormControl.
+    const fechaSub = this.form.get('FechaIncripcion')?.valueChanges.subscribe(() => this.calcularFechaFinalizacion());
+    const mesesSub = this.form.get('mesesInscripcion')?.valueChanges.subscribe(() => this.calcularFechaFinalizacion());
+    if (fechaSub) this.subs.push(fechaSub);
+    if (mesesSub) this.subs.push(mesesSub);
+  }
+
+  ngOnDestroy(): void {
+    this.subs.forEach(s => s.unsubscribe());
+    this.subs = [];
+  }
+
   //sUBMIT
   async submit() {
     if (this.form.valid) {
+      // prevenir doble envío
+      if (this.submitting) return;
+      this.submitting = true;
+
       const loading = await this.utilsSvc.loading();
       await loading.present();
 
@@ -96,12 +117,10 @@ export class MainPage {
         .signUp(this.form.value as User)
         .then(async res => {
           await this.firebaseSvc.updateUser(this.form.value.nombre);
-          
+
           let uid = res.user.uid;
           this.form.controls.uid.setValue(uid);
           this.setUserInfo(uid);
-          
-          
         })
         .catch((error) => {
           console.log(error);
@@ -116,6 +135,7 @@ export class MainPage {
         })
         .finally(() => {
           loading.dismiss();
+          this.submitting = false;
         });
     }
   }

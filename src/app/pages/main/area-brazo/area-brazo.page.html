@@ -1,13 +1,106 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>area-brazo</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header
+  backButton="/main/categoria-entrenamientos"
+  title="Brazo"
+></app-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">area-brazo</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="page-bg">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-overlay"></div>
+
+    <div class="hero-body">
+      <ion-icon name="barbell-outline" class="hero-icon"></ion-icon>
+
+      <h1 class="hero-title">Entrenamiento de Brazo</h1>
+
+      <ion-chip color="danger" *ngIf="category">
+        <ion-label>{{ category }}</ion-label>
+      </ion-chip>
+
+      <p class="hero-description">
+        Fortalece bíceps y tríceps con rutinas diseñadas para ganar fuerza,
+        resistencia y definición muscular.
+      </p>
+    </div>
+  </section>
+
+  <!-- EJERCICIOS -->
+  <section class="content-section" *ngIf="exercises.length > 0">
+    <div class="exercise-grid">
+      <ion-card
+        class="exercise-card"
+        *ngFor="let exercise of exercises; let i = index"
+        (click)="toggleExercise(i)"
+      >
+        <!-- HEADER TARJETA -->
+        <div class="exercise-header">
+          <div class="left">
+            <ion-icon name="fitness-outline"></ion-icon>
+            <h2>{{ exercise.name }}</h2>
+          </div>
+
+          <ion-icon
+            name="chevron-down-outline"
+            class="toggle-icon"
+            [class.open]="exercise.expanded"
+          ></ion-icon>
+        </div>
+
+        <!-- CUERPO EXPANDIBLE -->
+        <div class="exercise-body" [class.open]="exercise.expanded">
+          <p class="description">{{ exercise.description }}</p>
+
+          <!-- STATS SERIES Y REPS -->
+          <div class="stats">
+            <div class="stat">
+              <ion-icon name="repeat-outline"></ion-icon>
+              <span><strong>Series:</strong> {{ exercise.sets }}</span>
+            </div>
+
+            <div class="stat">
+              <ion-icon name="refresh-outline"></ion-icon>
+              <span><strong>Reps:</strong> {{ exercise.reps }}</span>
+            </div>
+          </div>
+
+          <!-- BARRA DE PROGRESO -->
+          <div class="progress-box">
+            <span class="progress-title">Progreso</span>
+
+            <ion-progress-bar
+              class="progress-bar"
+              [value]="exercise.completedSeries / exercise.totalSeries"
+            ></ion-progress-bar>
+
+            <div class="progress-actions">
+              <ion-button
+                fill="clear"
+                (click)="updateProgress(i, 'series', -1); $event.stopPropagation()"
+              >
+                <ion-icon name="remove-circle-outline"></ion-icon>
+              </ion-button>
+
+              <span class="progress-value">
+                {{ exercise.completedSeries || 0 }}
+              </span>
+
+              <ion-button
+                fill="clear"
+                (click)="updateProgress(i, 'series', 1); $event.stopPropagation()"
+              >
+                <ion-icon name="add-circle-outline"></ion-icon>
+              </ion-button>
+            </div>
+          </div>
+        </div>
+      </ion-card>
+    </div>
+  </section>
+
+  <!-- MENSAJE VACÍO -->
+  <section class="empty" *ngIf="exercises.length === 0">
+    <ion-icon name="barbell-outline"></ion-icon>
+    <h3>No hay ejercicios disponibles</h3>
+    <p>Selecciona una categoría para comenzar</p>
+  </section>
 </ion-content>

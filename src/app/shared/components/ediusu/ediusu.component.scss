@@ -1,0 +1,774 @@
+:host {
+  display: block;
+  box-sizing: border-box;
+  overflow-x: hidden; /* evitar desbordamiento horizontal accidental */
+}
+
+.usuarios-page .toolbar-row {
+  margin-bottom: 12px;
+}
+
+.page-title {
+  margin: 0 0 4px 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.subtitle {
+  margin: 0;
+  /* color claro y llamativo en estilo pill */
+  color: var(--subtitle-text-color, #ffffff);
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 12px 12px;
+  background: rgb(0, 0, 0); /* fondo muy suave */
+  letter-spacing: 0.6px;
+}
+
+.users-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+  max-width: 1200px;
+  margin: 0 auto; /* mantiene la grilla centrada, pero el contenido interno estará alineado a la izquierda */
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 12px 28px; /* asegurar espacio inferior antes del footer */
+  box-sizing: border-box;
+}
+
+.top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.titles { text-align: left; }
+.tools { width: auto; }
+.tools ion-searchbar { --background: rgb(255, 255, 255); border-radius: 40px; max-width: 420px; width: 100%; }
+
+.user-card {
+  --background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
+  border-radius: 12px;
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.user-card ion-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  gap: 12px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar-icon {
+  font-size: 44px;
+  color: var(--ion-color-primary, #3880ff);
+}
+
+.title-group .name {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+.title-group .email {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--ion-color-medium, #6e6e6e);
+}
+
+/* Forzar alineación izquierda y consistencia */
+.user-card,
+.user-card ion-card-header,
+.user-card ion-card-content,
+.title-group,
+.header-left,
+.info-grid {
+  text-align: left !important;
+}
+
+.header-right {
+  align-items: flex-end; /* mantener UID a la derecha pero sin centrar el texto principal */
+}
+
+.page-title,
+.subtitle {
+  text-align: left;
+}
+
+.info-item {
+  margin-bottom: 8px;
+  text-align: left;
+}
+
+.users-grid { /* asegurar separación visual entre tarjetas */
+  padding: 8px 0; /* evitar padding horizontal que cause overflow */
+  box-sizing: border-box;
+}
+
+.header-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.uid {
+  font-size: 0.7rem;
+  color: var(--ion-color-medium-shade, #8a8a8a);
+}
+
+.info-grid {
+  padding: 12px 16px 16px 16px;
+}
+
+.info-item {
+  margin-bottom: 6px;
+  color: var(--ion-color-dark, #222);
+}
+
+.uid-block code {
+  background: rgba(0,0,0,0.04);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+
+.empty-state ion-icon {
+  color: var(--ion-color-medium, #9a9a9a);
+  font-size: 48px;
+}
+
+@media (max-width: 480px) {
+  .page-title { font-size: 1.1rem; }
+  .avatar-icon { font-size: 38px; }
+  .users-grid { gap: 10px; }
+}
+
+/* Mejoras de contraste y apariencia */
+.usuarios-page {
+  background: var(--ion-background-color, #f7f8fa);
+  padding-bottom: 18px;
+}
+
+/* Espacio fijo para compensar header fijo (usa safe-area cuando exista) */
+.header-spacer {
+  height: 84px; /* fallback */
+  height: calc(env(safe-area-inset-top) + 64px);
+}
+
+/* Fijar el header en la parte superior usando position:fixed para evitar
+   inconsistencias con el scroll interno de ion-content (previene doble scroll). */
+app-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+}
+
+/* Ajustar el contenido desplazándolo hacia abajo para dejar espacio para el header */
+/* fallback: altura del toolbar (toolbar ~56-64px). Luego intentar usar env(safe-area-inset-top). */
+ion-content.usuarios-page {
+  padding-top: 84px;
+  padding-top: calc(env(safe-area-inset-top) + 84px);
+}
+
+/* Forzar altura del toolbar/header para que el espacio coincida con el padding */
+app-header ion-toolbar,
+app-header ion-header {
+  height: 64px;
+  min-height: 64px;
+}
+
+/* Asegurar que los botones sean interactivos y el header no bloquee eventos */
+app-header {
+  pointer-events: auto;
+}
+
+/* Forzar fondo opaco del toolbar para que el header no sea transparente */
+app-header ion-toolbar {
+  background: var(--ion-color-danger, #eb445a) !important;
+}
+
+.user-card {
+  background: #ffffff; /* fondo claro para contraste */
+  color: #111; /* texto oscuro legible */
+  box-shadow: 0 6px 18px rgba(20,20,30,0.06);
+  border: 1px solid rgba(30,30,30,0.04);
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.user-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(20,20,30,0.12);
+}
+
+.user-card ion-card-header, .user-card ion-card-content {
+  color: inherit; /* asegurar herencia de color */
+}
+
+.card-body {
+  display: flex;
+  gap: 12px;
+  padding: 6px 0 12px 0;
+}
+.left-col, .right-col {
+  flex: 1 1 0;
+}
+.info-item { margin-bottom: 8px; }
+
+.meta-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: center;
+  border-top: 1px solid rgba(0,0,0,0.04);
+  padding-top: 10px;
+  margin-top: 8px;
+}
+.muted { color: #666; font-size: 0.85rem; }
+
+.card-footer { margin-top: 8px; }
+.uid-block code { font-size: 0.78rem; color: #444; }
+
+.membership-chip { font-weight: 700; }
+
+/* Ajustes responsivos: en pantallas pequeñas apilar columnas */
+@media (max-width: 720px) {
+  .top-row { flex-direction: column; align-items: stretch; }
+  .tools { width: 100%; }
+  .card-body { flex-direction: column; }
+  .users-grid { grid-template-columns: 1fr; }
+}
+
+.header-left ion-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  background: var(--ion-color-primary, #e80000);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-left ion-avatar ion-icon {
+  color: #fff;
+  font-size: 28px;
+}
+
+.info-item strong {
+  color: var(--ion-color-dark, #111);
+}
+
+.uid-block code {
+  color: var(--ion-color-dark, #222);
+}
+
+/* Ajustes para pantallas muy pequeñas */
+@media (max-width: 360px) {
+  .title-group .name { font-size: 0.98rem; }
+  .header-left ion-avatar { width: 48px; height: 48px; }
+}
+.custom-select-wrapper {
+  display: flex;
+  background: #fff;
+  align-items: center;
+  border: 1.5px solid var(--ion-color-danger);
+  border-radius: 18px;
+  padding: 3px 0px 3px 17px; /* arriba, derecha, abajo, izquierda */
+  gap: 33px;
+}
+
+.custom-select-wrapper ion-icon {
+  color: var(--ion-color-danger);
+  font-size: 23px;
+}
+
+.custom-select-wrapper ion-select {
+  flex: 1;
+  --padding-start: 0;
+  --background: transparent;
+  --border-width: 0;
+}
+
+.custom-label {
+  position: absolute;
+  top: -10px;
+  left: 12px;
+  background: white;
+  padding: 0 4px;
+  font-size: 12px;
+  color: var(--ion-color-danger);
+  font-weight: 600;
+  pointer-events: none;
+  user-select: none;
+}
+
+.modal-content {
+  --background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.hero-section {
+  position: relative;
+  height: 200px;
+  background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.08)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.08)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.04)"/><circle cx="10" cy="50" r="0.5" fill="rgba(255,255,255,0.04)"/><circle cx="90" cy="30" r="0.5" fill="rgba(255,255,255,0.04)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+  opacity: 0.2;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: white;
+}
+
+.hero-icon {
+  margin-bottom: 16px;
+}
+
+.pulse-icon {
+  font-size: 72px;
+  color: #fff;
+  animation: pulse 2s infinite;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+}
+
+.hero-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin: 0 0 8px 0;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  letter-spacing: -0.5px;
+}
+
+.hero-subtitle {
+  font-size: 1.1rem;
+  margin: 0;
+  font-weight: 400;
+  opacity: 0.9;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.form-wrapper {
+  padding: 40px 20px;
+  max-width: 900px;
+  margin: -40px auto 0;
+  position: relative;
+  z-index: 3;
+}
+
+.modern-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.form-card {
+  background: #fff;
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation: slideInUp 0.8s ease-out;
+}
+
+.form-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.15);
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.personal-card {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  color: white;
+}
+
+.membership-card {
+  background: linear-gradient(135deg, #991b1b 0%, #7f1d1d 100%);
+  color: white;
+}
+
+.physical-card {
+  background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+  color: white;
+}
+
+.nutrition-card {
+  background: linear-gradient(135deg, #b91c1c 0%, #7f1d1d 100%);
+  color: white;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 24px 32px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.card-icon {
+  width: 56px;
+  height: 56px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.card-icon ion-icon {
+  font-size: 28px;
+  color: white;
+}
+
+.card-title h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+}
+
+.card-title p {
+  font-size: 0.9rem;
+  margin: 0;
+  opacity: 0.8;
+}
+
+.card-content {
+  padding: 32px;
+}
+
+.input-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.input-row.single {
+  grid-template-columns: 1fr;
+}
+
+.input-group {
+  position: relative;
+}
+
+.input-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.select-wrapper {
+  position: relative;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 16px;
+  padding: 20px 24px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+.select-wrapper:hover {
+  border-color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.select-wrapper ion-icon {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 24px;
+  z-index: 2;
+}
+
+.modern-select {
+  --placeholder-color: rgba(255, 255, 255, 0.7);
+  --padding-start: 48px;
+  --padding-end: 16px;
+  font-weight: 500;
+  font-size: 1rem;
+  color: white;
+  --color: white;
+}
+
+.error-message {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: rgba(255, 59, 48, 0.1);
+  border: 1px solid rgba(255, 59, 48, 0.3);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #ff3b30;
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+.error-message ion-icon {
+  font-size: 16px;
+  color: #ff3b30;
+}
+
+.submit-section {
+  margin-top: 32px;
+  padding: 32px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 24px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.submit-button {
+  height: 64px;
+  font-weight: 700;
+  font-size: 1.3rem;
+  border-radius: 32px;
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  box-shadow: 0 12px 32px rgba(220, 38, 38, 0.3);
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+  border: none;
+}
+
+.submit-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.6s;
+}
+
+.submit-button:hover::before {
+  left: 100%;
+}
+
+.submit-button:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 48px rgba(220, 38, 38, 0.4);
+}
+
+.submit-button:disabled {
+  opacity: 0.6;
+  transform: none;
+  box-shadow: 0 8px 20px rgba(220, 38, 38, 0.2);
+  cursor: not-allowed;
+}
+
+.submit-button ion-icon {
+  font-size: 1.4rem;
+}
+
+.button-text {
+  margin: 0 8px;
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .hero-section {
+    height: 160px;
+  }
+
+  .pulse-icon {
+    font-size: 56px;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .form-wrapper {
+    padding: 20px 16px;
+    margin-top: -20px;
+  }
+
+  .form-card {
+    border-radius: 20px;
+  }
+
+  .card-header {
+    padding: 20px 24px;
+  }
+
+  .card-icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .card-icon ion-icon {
+    font-size: 24px;
+  }
+
+  .card-title h3 {
+    font-size: 1.3rem;
+  }
+
+  .card-content {
+    padding: 24px;
+  }
+
+  .input-row {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .select-wrapper {
+    padding: 18px 20px;
+  }
+
+  .select-wrapper ion-icon {
+    left: 18px;
+  }
+
+  .modern-select {
+    --padding-start: 44px;
+  }
+
+  .submit-section {
+    padding: 24px;
+  }
+
+  .submit-button {
+    height: 56px;
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section {
+    height: 140px;
+  }
+
+  .pulse-icon {
+    font-size: 48px;
+  }
+
+  .hero-title {
+    font-size: 1.8rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.95rem;
+  }
+
+  .form-wrapper {
+    padding: 16px 12px;
+  }
+
+  .card-header {
+    padding: 16px 20px;
+    gap: 12px;
+  }
+
+  .card-icon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .card-icon ion-icon {
+    font-size: 20px;
+  }
+
+  .card-title h3 {
+    font-size: 1.2rem;
+  }
+
+  .card-content {
+    padding: 20px;
+  }
+
+  .select-wrapper {
+    padding: 16px 18px;
+  }
+
+  .select-wrapper ion-icon {
+    left: 16px;
+  }
+
+  .modern-select {
+    --padding-start: 40px;
+  }
+
+  .submit-section {
+    padding: 20px;
+  }
+
+  .submit-button {
+    height: 52px;
+    font-size: 1.1rem;
+  }
+}

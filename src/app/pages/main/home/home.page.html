@@ -1,3 +1,4 @@
+<!-- HEADER -->
 <div class="home-page-header-wrapper">
   <ion-buttons slot="start" class="header-button left">
     <ion-button fill="clear" (click)="openLeftMenu()">
@@ -14,100 +15,99 @@
   </ion-buttons>
 </div>
 
-<!-- Menú izquierdo -->
+<!-- ==================== MENÚ IZQUIERDO ==================== -->
 <ion-menu side="start" menuId="left-menu" contentId="main-content">
   <ion-header>
     <ion-toolbar color="danger">
-      <ion-title>Menú</ion-title>
+      <ion-title><strong>Menú Principal</strong></ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-content class="ion-padding">
-   
-    <!-- Ver Usuarios -->
-    <ion-item button menuClose (click)="goProfile()" color="light">
-      <ion-icon slot="start" name="people-outline"></ion-icon>
-      <ion-label>Ver Usuarios</ion-label>
-    </ion-item>
 
-    <!-- Editar Usuarios -->
-    <ion-item
-      *ngIf="usuarioMembresia == 'Administrador'"
-      detail="true"
-      button
-      menuClose
-      (click)="editarUsuarios()"
-      color="light"
-    >
-      <ion-icon slot="start" name="create-outline"></ion-icon>
-      <ion-label>Editar Usuarios</ion-label>
-    </ion-item>
+  <ion-content>
+    <ion-list lines="none">
+      <ion-item button menuClose (click)="goUsuarios()" color="danger">
+        <ion-icon slot="start" name="people-outline"></ion-icon>
+        <ion-label>Gestionar Usuarios</ion-label>
+      </ion-item>
 
-    <!-- Sacar Reportes -->
-    <ion-item
-      *ngIf="usuarioMembresia == 'Administrador'"
-      detail="true"
-      button
-      menuClose
-      (click)="sacarReportes()"
-      color="light"
-    >
-      <ion-icon slot="start" name="document-text-outline"></ion-icon>
-  
-      <ion-label>Reportes</ion-label>
-    </ion-item>
+      <ion-item
+        *ngIf="usuarioMembresia == 'Administrador'"
+        button
+        menuClose
+        (click)="goEdiUsuarios()"
+        color="danger"
+      >
+        <ion-icon slot="start" name="create-outline"></ion-icon>
+        <ion-label>Agregar Usuarios</ion-label>
+      </ion-item>
 
-    <!-- Configuración -->
-    <ion-item
-      *ngIf="usuarioMembresia == 'Administrador'"
-      detail="true"
-      button
-      menuClose
-      (click)="goToSignUp()"
-      color="light"
-    >
-      <ion-icon slot="start" name="settings-outline"></ion-icon>
-      <ion-label>Agregar usuario</ion-label>
-    </ion-item>
+      <ion-item
+        *ngIf="usuarioMembresia == 'Administrador'"
+        button
+        menuClose
+        (click)="sacarReportes()"
+        color="danger"
+      >
+        <ion-icon slot="start" name="document-text-outline"></ion-icon>
+        <ion-label>Ver Reportes</ion-label>
+      </ion-item>
 
-    <!-- Cerrar sesión -->
-    <ion-item button menuClose (click)="signOut()" color="light">
-      <ion-icon slot="start" name="log-out-outline"></ion-icon>
-      <ion-label>Cerrar Sesión</ion-label>
-    </ion-item>
+      <ion-item
+        *ngIf="usuarioMembresia == 'Administrador'"
+        button
+        menuClose
+        (click)="goToSignUp()"
+        color="danger"
+      >
+        <ion-icon slot="start" name="bar-chart-outline"></ion-icon>
+        <ion-label>Ver gráficas</ion-label>
+      </ion-item>
+    </ion-list>
   </ion-content>
 </ion-menu>
 
-<!-- ================Menú derecho - Opciones de usuario===========-->
-<ion-menu  side="end" menuId="right-menu" contentId="main-content">
+<!-- ==================== MENÚ DERECHO ==================== -->
+<ion-menu side="end" menuId="right-menu" contentId="main-content">
   <ion-header>
     <ion-toolbar color="danger">
-      <ion-title>Opciones de usuario</ion-title>
+      <ion-title><strong>Opciones de usuario</strong></ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <ion-content  class="ion-padding">
-    <ion-item color="dark" lines="full">
-      <ion-label><strong>👋 Hola, {{ usuarioNombre }}</strong></ion-label>
-    </ion-item>
+  <ion-content>
+    <ion-card class="welcome-card">
+      <ion-card-content>
+        <div class="welcome-container">
+          <ion-icon
+            name="person-circle-outline"
+            class="welcome-icon"
+          ></ion-icon>
 
-    <!-- Perfil del usuario -->
-    <ion-item button (click)="goProfile()" color="dark">
-      <ion-icon slot="start" name="person-circle-outline"></ion-icon>
-      <ion-label>Perfil</ion-label>
-    </ion-item>
+          <h2 class="welcome-title">Hola,</h2>
+          <h1 class="welcome-name">{{ usuarioNombre }}</h1>
 
-    <!-- Contactos -->
-    <ion-item button (click)="goContactos()" color="dark">
-      <ion-icon slot="start" name="people-outline"></ion-icon>
-      <ion-label>Contactos</ion-label>
-    </ion-item>
-   
+          <p class="welcome-subtitle">Bienvenido al Gimnasio Venum</p>
+        </div>
+      </ion-card-content>
+    </ion-card>
 
-    <!-- Cerrar Sesión -->
+    <ion-list lines="none" color="dark">
+      <ion-item button (click)="goProfile()" color="dark">
+        <ion-icon slot="start" name="person-circle-outline"></ion-icon>
+        <ion-label>Perfil</ion-label>
+      </ion-item>
+
+      <ion-item button (click)="goContactos()" color="dark">
+        <ion-icon slot="start" name="people-outline"></ion-icon>
+        <ion-label>Contactos</ion-label>
+      </ion-item>
+    </ion-list>
+
     <ion-button
       expand="block"
       color="danger"
       class="ion-margin-top"
+      shape="round"
       (click)="signOut()"
     >
       <ion-icon slot="start" name="log-out-outline"></ion-icon>
@@ -116,96 +116,122 @@
   </ion-content>
 </ion-menu>
 
-<!-- Contenido principal -->
+<!-- ==================== CONTENIDO PRINCIPAL ==================== -->
+<ion-content id="main-content" class="ion-padding">
+  <!-- CARD: Días Asistidos -->
+  <ion-card class="full-width-card" color="dark">
+    <ion-item color="light">
+      <ion-label color="dark">
+        <h2><strong>Días Asistidos</strong></h2>
+      </ion-label>
+    </ion-item>
 
-
-  <ion-content id="main-content" class="ion-padding">
-    <ion-card class="full-width-card" color="dark">
-       <ion-item color="light">
-        <ion-label color="dark">
-          <strong><h2>Dias Asistidos</h2></strong>
-        </ion-label>
-      </ion-item>
-      <ion-card-content >
-        <ion-grid>
-          <ion-row class="week-row" justify-content-center>
-            <ion-col *ngFor="let day of week" size="auto">
-              <div [ngClass]="{'day-box': true, 'today': day.isToday}">
-                {{ day.name }}
-                <p></p>
-                {{ day.date }}
-              </div>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-card-content>
-    </ion-card>
-
-   <!--Datos-->
-    <ion-card class="full-width-card2" *ngIf="usuarioMembresia == 'Administrador'" detail="true">
-       <ion-item color="light">
-        <ion-label color="dark">
-          <strong><h2>Tus datos principales</h2></strong>
-        </ion-label>
-      </ion-item>
-
+    <ion-card-content>
       <ion-grid>
-        <ion-row>
-          <ion-col size="6">
-            <ion-card class="info-card">
-              <ion-card-header>
-                <ion-card-title color="danger"><strong>{{usuarioTalla}} cm</strong>  </ion-card-title>
-              </ion-card-header>
-              <ion-card-content><strong>Estatura</strong></ion-card-content>
-            </ion-card>
-          </ion-col>
-
-          <ion-col size="6">
-            <ion-card class="info-card">
-              <ion-card-header>
-                <ion-card-title color="danger"> <strong>{{usuarioPeso}} Kg</strong> </ion-card-title>
-              </ion-card-header>
-              <ion-card-content><strong>Peso</strong></ion-card-content>
-            </ion-card>
-          </ion-col>
-        </ion-row>
-
-        <ion-row>
-          <ion-col size="6">
-            <ion-card class="info-card">
-              <ion-card-header>
-                <ion-card-title color="danger"><strong>{{UsuarioImc}} </strong> </ion-card-title>
-              </ion-card-header>
-              <ion-card-content><strong>IMC</strong></ion-card-content>
-            </ion-card>
-          </ion-col>
-
-          <ion-col size="6">
-            <ion-card class="info-card">
-              <ion-card-header>
-                <ion-card-title color="danger"><strong> {{UsuarioVasos}}</strong> </ion-card-title>
-              </ion-card-header>
-              <ion-card-content><strong>Vasos de agua</strong><p></p>(1 vaso = 250 ml)</ion-card-content>
-            </ion-card>
+        <ion-row class="week-row">
+          <ion-col *ngFor="let day of week" size="auto">
+            <div [ngClass]="{'day-box': true, 'today': day.isToday}">
+              {{ day.name }} <br />
+              <small>{{ day.date }}</small>
+            </div>
           </ion-col>
         </ion-row>
       </ion-grid>
-    </ion-card>
+    </ion-card-content>
+  </ion-card>
 
+  <!-- CARD: Datos Principales -->
+  <ion-card
+    *ngIf="usuarioMembresia == 'Administrador'"
+    class="full-width-card2"
+    color="dark"
+  >
+    <ion-item color="light">
+      <ion-label color="dark">
+        <h2><strong>Tus Datos Principales</strong></h2>
+      </ion-label>
+    </ion-item>
 
-    <ion-card class="full-width-card" color="dark">
-       <ion-item color="light">
-        <ion-label color="dark">
-          <strong><h2>Areas que puedes trabajar</h2></strong>
-        </ion-label>
-      </ion-item>
-      <ion-card-content>
-      <ion-button class="ion-padding" (click)="goCategoria()" size="large" color="light" expand="block" shape="round">
-        Ver Areas
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6">
+          <ion-card class="info-card">
+            <ion-card-header>
+              <ion-card-title>
+                <ion-text color="danger"
+                  ><strong>{{usuarioTalla}} cm</strong></ion-text
+                >
+              </ion-card-title>
+            </ion-card-header>
+            <ion-card-content><strong>Estatura</strong></ion-card-content>
+          </ion-card>
+        </ion-col>
+
+        <ion-col size="6">
+          <ion-card class="info-card">
+            <ion-card-header>
+              <ion-card-title>
+                <ion-text color="danger"
+                  ><strong>{{usuarioPeso}} Kg</strong></ion-text
+                >
+              </ion-card-title>
+            </ion-card-header>
+            <ion-card-content><strong>Peso</strong></ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="6">
+          <ion-card class="info-card">
+            <ion-card-header>
+              <ion-card-title>
+                <ion-text color="danger"
+                  ><strong>{{UsuarioImc}}</strong></ion-text
+                >
+              </ion-card-title>
+            </ion-card-header>
+            <ion-card-content><strong>IMC</strong></ion-card-content>
+          </ion-card>
+        </ion-col>
+
+        <ion-col size="6">
+          <ion-card class="info-card">
+            <ion-card-header>
+              <ion-card-title>
+                <ion-text color="danger"
+                  ><strong>{{UsuarioVasos}}</strong></ion-text
+                >
+              </ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <strong>Vasos de agua</strong>
+              <p style="margin: 0">(1 vaso = 250 ml)</p>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+
+  <!-- CARD: Áreas de Entrenamiento -->
+  <ion-card class="full-width-card" color="dark">
+    <ion-item color="light">
+      <ion-label color="dark">
+        <h2><strong>Áreas que puedes trabajar</strong></h2>
+      </ion-label>
+    </ion-item>
+
+    <ion-card-content>
+      <ion-button
+        (click)="goCategoria()"
+        size="large"
+        color="light"
+        expand="block"
+        shape="round"
+      >
+        Ver Áreas
       </ion-button>
-      </ion-card-content>
-    </ion-card>
-  </ion-content>
-
- 
-
+    </ion-card-content>
+  </ion-card>
+</ion-content>

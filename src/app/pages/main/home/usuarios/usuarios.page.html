@@ -1,0 +1,125 @@
+<app-header backButton="/main/home" title="Usuarios"></app-header>
+
+<ion-content class="ion-padding usuarios-page">
+  <div class="container">
+
+    <!-- Separador para header fijo -->
+    <div class="header-spacer" aria-hidden="true"></div>
+
+    <!-- Search bar -->
+    <div class="tools">
+      <ion-searchbar 
+        placeholder="Buscar por nombre, email o UID"
+        show-cancel-button="never"
+        [formControl]="searchControl"
+        debounce="300">
+      </ion-searchbar>
+    </div>
+
+    <!-- Subtítulo -->
+    <p class="subtitle">Listado completo de usuarios registrados</p>
+
+    <!-- Lista de usuarios -->
+    <ng-container *ngIf="filteredUsers$ | async as users; else loading">
+
+      <div *ngIf="users.length > 0; else empty" class="users-grid">
+
+        <ion-card *ngFor="let u of users" class="user-card">
+
+          <!-- HEADER TARJETA -->
+          <ion-card-header>
+            <div class="header-left">
+              <ion-avatar>
+                <ion-icon class="avatar-icon" name="person-circle-outline"></ion-icon>
+              </ion-avatar>
+
+              <div class="title-group">
+                <h2 class="name">{{ u.nombre || 'Sin nombre' }}</h2>
+                <p class="email">{{ u.email || '-' }}</p>
+              </div>
+            </div>
+
+            <div class="header-right">
+              <ion-chip 
+                [color]="u.tipoMembresia === 'Administrador' ? 'danger' : 'tertiary'"
+                class="membership-chip">
+                <ion-label>{{ u.tipoMembresia || 'Usuario' }}</ion-label>
+              </ion-chip>
+            </div>
+          </ion-card-header>
+
+          <!-- CONTENIDO TARJETA -->
+          <ion-card-content>
+
+            <div class="card-body">
+              <div class="left-col">
+                <div class="info-item"><strong>Edad:</strong> {{ u.edad || '-' }} años</div>
+                <div class="info-item"><strong>Género:</strong> {{ u.genero || '-' }}</div>
+                <div class="info-item"><strong>Plan:</strong> {{ u.planNutricional || '-' }}</div>
+              </div>
+
+              <div class="right-col">
+                <div class="info-item"><strong>Peso:</strong> {{ u.peso || '-' }} kg</div>
+                <div class="info-item"><strong>Estatura:</strong> {{ u.estatura || '-' }} cm</div>
+                <div class="info-item"><strong>IMC:</strong> {{ imc(u) }}</div>
+              </div>
+            </div>
+
+            <div class="meta-row">
+              <div class="meta-left">
+                <small class="muted">Meses inscrito: {{ u.mesesInscripcion || '-' }}</small>
+              </div>
+
+              <div class="meta-right">
+                <small class="muted">Inscripción: {{ fmtDate(u.FechaInscripcion) }}</small>
+                <small class="muted"> • Finaliza: {{ fmtDate(u.FechaFinalizacion) }}</small>
+              </div>
+            </div>
+
+            <div class="card-footer">
+              <div class="uid-block">
+                <strong>UID:</strong> <code>{{ u.uid }}</code>
+              </div>
+              <div class="actions">
+                <ion-button fill="clear" color="primary" (click)="editUser(u)">
+                  <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+                </ion-button>
+                <ion-button fill="clear" color="danger" (click)="deleteUser(u)">
+                  <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+                </ion-button>
+              </div>
+            </div>
+
+          </ion-card-content>
+        </ion-card>
+
+      </div>
+
+    </ng-container>
+
+    <!-- LOADING -->
+    <ng-template #loading>
+      <div class="ion-text-center ion-padding">
+        <ion-spinner name="crescent"></ion-spinner>
+        <p>Cargando usuarios...</p>
+      </div>
+    </ng-template>
+
+    <!-- EMPTY STATE -->
+    <ng-template #empty>
+      <div class="ion-text-center ion-padding empty-state">
+        <ion-icon name="people-outline" size="large"></ion-icon>
+        <h3>No hay usuarios registrados</h3>
+        <p>Verifica la base de datos o crea usuarios desde el panel de administración.</p>
+      </div>
+    </ng-template>
+
+  </div>
+
+  <!-- FAB para agregar usuario -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="danger" (click)="addUser()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

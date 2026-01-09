@@ -1,0 +1,301 @@
+<app-header [isModal]="true" [title]="user ? 'Editar Usuario' : 'Agregar Usuario'"></app-header>
+
+<ion-content class="modal-content">
+  <div class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-icon">
+        <ion-icon name="person-add-circle" class="pulse-icon"></ion-icon>
+      </div>
+      <h1 class="hero-title">{{ user ? 'Editar Usuario' : 'Nuevo Usuario' }}</h1>
+      <p class="hero-subtitle">{{ user ? 'Actualiza la información del usuario' : 'Registra un nuevo miembro en el gimnasio' }}</p>
+    </div>
+  </div>
+
+  <div class="form-wrapper">
+    <form
+      [formGroup]="form"
+      class="modern-form"
+      (ngSubmit)="submit()"
+      (keypress.enter)="submit()"
+    >
+      <!-- Información Personal Card -->
+      <div class="form-card personal-card">
+        <div class="card-header">
+          <div class="card-icon">
+            <ion-icon name="person-circle"></ion-icon>
+          </div>
+          <div class="card-title">
+            <h3>Información Personal</h3>
+            <p>Datos básicos del usuario</p>
+          </div>
+        </div>
+
+        <div class="card-content">
+          <div class="input-row">
+            <div class="input-group">
+              <app-custom-input
+                autocomplete="nombre"
+                icon="person"
+                [control]="form.controls.nombre"
+                type="text"
+                label="Nombre Completo"
+                placeholder="Ingresa el nombre completo"
+              ></app-custom-input>
+              <div class="error-message" *ngIf="form.controls.nombre.errors && form.controls.nombre.touched">
+                <ion-icon name="warning"></ion-icon>
+                <span *ngIf="form.controls.nombre.errors?.['required']">El nombre es obligatorio</span>
+                <span *ngIf="form.controls.nombre.errors?.['minlength']">Mínimo 4 caracteres</span>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <app-custom-input
+                autocomplete="email"
+                icon="mail"
+                [control]="form.controls.email"
+                type="email"
+                label="Correo Electrónico"
+                placeholder="usuario@email.com"
+              ></app-custom-input>
+              <div class="error-message" *ngIf="form.controls.email.errors && form.controls.email.touched">
+                <ion-icon name="warning"></ion-icon>
+                <span *ngIf="form.controls.email.errors?.['required']">El correo es obligatorio</span>
+                <span *ngIf="form.controls.email.errors?.['email']">Correo electrónico inválido</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="input-row">
+            <div class="input-group">
+              <app-custom-input
+                icon="lock-closed"
+                [control]="form.controls.password"
+                type="password"
+                label="Contraseña"
+                placeholder="Contraseña segura"
+              ></app-custom-input>
+              <div class="error-message" *ngIf="form.controls.password.errors && form.controls.password.touched">
+                <ion-icon name="warning"></ion-icon>
+                <span *ngIf="form.controls.password.errors?.['required']">La contraseña es obligatoria</span>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <div class="select-wrapper">
+                <ion-icon name="transgender"></ion-icon>
+                <ion-select
+                  label="Género"
+                  color="primary"
+                  fill="outline"
+                  [formControl]="form.controls.genero"
+                  interface="popover"
+                  placeholder="Selecciona género"
+                  class="modern-select"
+                >
+                  <ion-select-option value="Masculino">Masculino</ion-select-option>
+                  <ion-select-option value="Femenino">Femenino</ion-select-option>
+                </ion-select>
+              </div>
+              <div class="error-message" *ngIf="form.controls.genero.errors && form.controls.genero.touched">
+                <ion-icon name="warning"></ion-icon>
+                <span *ngIf="form.controls.genero.errors?.['required']">El género es obligatorio</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="input-row single">
+            <div class="input-group">
+              <app-custom-input
+                icon="calendar"
+                [control]="form.controls.edad"
+                type="number"
+                label="Edad"
+                placeholder="Edad en años"
+              ></app-custom-input>
+              <div class="error-message" *ngIf="form.controls.edad.errors && form.controls.edad.touched">
+                <ion-icon name="warning"></ion-icon>
+                <span *ngIf="form.controls.edad.errors?.['required']">La edad es obligatoria</span>
+                <span *ngIf="form.controls.edad.errors?.['pattern']">Edad inválida (0-999)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Membresía Card -->
+      <div class="form-card membership-card">
+        <div class="card-header">
+          <div class="card-icon">
+            <ion-icon name="card"></ion-icon>
+          </div>
+          <div class="card-title">
+            <h3>Membresía</h3>
+            <p>Información de la suscripción</p>
+          </div>
+        </div>
+
+        <div class="card-content">
+          <div class="input-row">
+            <div class="input-group">
+              <div class="select-wrapper">
+                <ion-icon name="shield-checkmark"></ion-icon>
+                <ion-select
+                  label="Tipo de Membresía"
+                  color="primary"
+                  fill="outline"
+                  [formControl]="form.controls.tipoMembresia"
+                  interface="popover"
+                  placeholder="Selecciona tipo"
+                  class="modern-select"
+                >
+                  <ion-select-option value="Inscrito">Inscrito</ion-select-option>
+                  <ion-select-option value="Administrador">Administrador</ion-select-option>
+                </ion-select>
+              </div>
+              <div class="error-message" *ngIf="form.controls.tipoMembresia.errors && form.controls.tipoMembresia.touched">
+                <ion-icon name="warning"></ion-icon>
+                <span *ngIf="form.controls.tipoMembresia.errors?.['required']">El tipo es obligatorio</span>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <app-custom-input
+                icon="calendar"
+                [control]="form.controls.FechaInscripcion"
+                type="date"
+                label="Fecha de Inscripción"
+                (input)="calcularFechaFinalizacion()"
+              ></app-custom-input>
+              <div class="error-message" *ngIf="form.controls.FechaInscripcion.errors && form.controls.FechaInscripcion.touched">
+                <ion-icon name="warning"></ion-icon>
+                <span *ngIf="form.controls.FechaInscripcion.errors?.['required']">La fecha es obligatoria</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="input-row">
+            <div class="input-group">
+              <app-custom-input
+                icon="time"
+                [control]="form.controls.mesesInscripcion"
+                type="number"
+                label="Meses de Membresía"
+                placeholder="Duración en meses"
+                (input)="calcularFechaFinalizacion()"
+                min="1"
+              ></app-custom-input>
+              <div class="error-message" *ngIf="form.controls.mesesInscripcion.errors && form.controls.mesesInscripcion.touched">
+                <ion-icon name="warning"></ion-icon>
+                <span *ngIf="form.controls.mesesInscripcion.errors?.['required']">Los meses son obligatorios</span>
+                <span *ngIf="form.controls.mesesInscripcion.errors?.['pattern']">Número inválido</span>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <app-custom-input
+                icon="calendar-checkmark"
+                [control]="form.controls.FechaFinalizacion"
+                type="date"
+                label="Fecha de Finalización"
+                [readonly]="true"
+              ></app-custom-input>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Información Física Card -->
+      <div class="form-card physical-card">
+        <div class="card-header">
+          <div class="card-icon">
+            <ion-icon name="fitness"></ion-icon>
+          </div>
+          <div class="card-title">
+            <h3>Información Física</h3>
+            <p>Métricas corporales</p>
+          </div>
+        </div>
+
+        <div class="card-content">
+          <div class="input-row">
+            <div class="input-group">
+              <app-custom-input
+                icon="barbell"
+                [control]="form.controls.peso"
+                type="number"
+                label="Peso"
+                placeholder="Peso en kg"
+              ></app-custom-input>
+              <div class="error-message" *ngIf="form.controls.peso.errors && form.controls.peso.touched">
+                <ion-icon name="warning"></ion-icon>
+                <span *ngIf="form.controls.peso.errors?.['required']">El peso es obligatorio</span>
+                <span *ngIf="form.controls.peso.errors?.['pattern']">Peso inválido (ej: 70 o 70.50)</span>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <app-custom-input
+                icon="body"
+                [control]="form.controls.estatura"
+                type="number"
+                label="Estatura"
+                placeholder="Estatura en cm"
+              ></app-custom-input>
+              <div class="error-message" *ngIf="form.controls.estatura.errors && form.controls.estatura.touched">
+                <ion-icon name="warning"></ion-icon>
+                <span *ngIf="form.controls.estatura.errors?.['required']">La estatura es obligatoria</span>
+                <span *ngIf="form.controls.estatura.errors?.['pattern']">Estatura inválida (ej: 175)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Plan Nutricional Card -->
+      <div class="form-card nutrition-card">
+        <div class="card-header">
+          <div class="card-icon">
+            <ion-icon name="restaurant"></ion-icon>
+          </div>
+          <div class="card-title">
+            <h3>Plan Nutricional</h3>
+            <p>Programa alimenticio personalizado</p>
+          </div>
+        </div>
+
+        <div class="card-content">
+          <div class="input-group full-width">
+            <app-custom-input
+              icon="nutrition"
+              [control]="form.controls.planNutricional"
+              type="text"
+              label="Plan Nutricional"
+              placeholder="Describe el plan nutricional del usuario"
+            ></app-custom-input>
+            <div class="error-message" *ngIf="form.controls.planNutricional.errors && form.controls.planNutricional.touched">
+              <ion-icon name="warning"></ion-icon>
+              <span *ngIf="form.controls.planNutricional.errors?.['required']">El plan es obligatorio</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="submit-section">
+        <ion-button
+          color="primary"
+          expand="block"
+          mode="ios"
+          class="submit-button"
+          type="submit"
+          [disabled]="form.invalid"
+        >
+          <ion-icon slot="start" name="checkmark-circle"></ion-icon>
+          <span class="button-text">{{ user ? 'Actualizar Usuario' : 'Registrar Usuario' }}</span>
+          <ion-icon slot="end" name="person-add"></ion-icon>
+        </ion-button>
+      </div>
+    </form>
+  </div>
+</ion-content>

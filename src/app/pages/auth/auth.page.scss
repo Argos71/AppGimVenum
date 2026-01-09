@@ -22,3 +22,80 @@ ion-item {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  background-color: var(--ion-background-color);
+  box-sizing: border-box;
+  overflow-x: hidden; /* evita 'deslizable' horizontal */
+  /* evitar scroll vertical en la página de login: intentamos que todo quepa en la pantalla
+     reduciendo tamaños en móviles y limitando la altura total */
+  max-height: 100vh;
+  overflow-y: hidden;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 460px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  background-color: var(--ion-card-background, #fff);
+  box-sizing: border-box;
+}
+
+.card-header { text-align: center; padding: 14px 12px 6px; }
+.logo-wrap { display:flex; justify-content:center; margin-bottom: 6px; }
+
+.auth-card ion-card-title { font-weight: 700; font-size: clamp(16px, 2.2vw, 20px); margin-top: 6px; }
+.auth-card ion-card-subtitle { font-size: clamp(12px, 1.6vw, 14px); color: var(--ion-color-medium); }
+.auth-card ion-card-content { padding: 12px 14px 18px; }
+
+.logo-wrap app-logo, .logo-wrap img, .logo-wrap svg {
+  display: block;
+  max-width: 110px;
+  width: clamp(48px, 14vw, 110px);
+  height: auto;
+}
+
+/* Compact base font-size inside card to avoid overflow on very small devices */
+.auth-card { font-size: 14px; }
+
+/* Ensure card content can shrink rather than forcing page scroll */
+.auth-card { display:flex; flex-direction:column; }
+.auth-card ion-card-content { flex: 1 1 auto; }
+.auth-card app-custom-input { margin-bottom: 6px; }
+
+/* Reduce spacing on very small screens to avoid vertical overflow */
+@media (max-height: 640px), (max-width: 360px) {
+  .auth-card { max-height: 92vh; }
+  .auth-card ion-card-content { padding: 8px 10px 12px; }
+  .auth-card ion-card-title { font-size: 15px; }
+  .logo-wrap app-logo, .logo-wrap img, .logo-wrap svg { max-width: 80px; }
+  .submit, .secondary-btn { height: 40px; }
+}
+
+.validators { margin-top: 8px; }
+.validator-text { color: var(--ion-color-danger); font-size: 13px; margin: 6px 0; }
+.actions-row { display:flex; justify-content:flex-end; margin-top: 6px; }
+.forgot-link { cursor: pointer; text-decoration: underline; }
+.submit { --border-radius: 10px; height: 46px; font-weight: 600; }
+.secondary-btn { --border-radius: 10px; height: 44px; margin-top: 10px; }
+
+@media (min-width: 900px) {
+  .auth-container { padding: 40px; }
+  .auth-card { max-width: 680px; }
+  .auth-card ion-card-content { padding: 20px 28px; }
+  .auth-card { font-size: 15px; }
+}
+
+@media (max-width: 420px) {
+  .auth-card { margin: 0 6px; }
+  .auth-card ion-card-title { font-size: 16px; }
+  .logo-wrap app-logo, .logo-wrap img, .logo-wrap svg { max-width: 90px; }
+}
+
+
