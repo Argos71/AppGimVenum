@@ -1,0 +1,39 @@
+<app-header [isModal]="true" title="Control de Asistencia"></app-header>
+
+<ion-content fullscreen class="attendance-modal">
+
+  <div class="attendance-wrapper">
+
+    <div class="attendance-card">
+
+      <div class="attendance-text">
+        <h2>
+          Los datos de tu asistencia se registrarán con la hora y fecha actual. 
+        </h2>
+      </div>
+
+      <div class="attendance-time">
+        <span class="label">HORA ACTUAL</span>
+        <div class="time">{{ horaActual }}</div>
+      </div>
+
+      <div class="attendance-date">
+        <span class="label">FECHA</span>
+        <div class="date">{{ fechaActual }}</div>
+      </div>
+
+      <ion-button
+        size="large"
+        expand="block"
+        color="danger"
+        shape="round"
+        class="attendance-btn"
+        (click)="registrarAsistencia()">
+        Registrar asistencia
+      </ion-button>
+
+    </div>
+
+  </div>
+
+</ion-content>

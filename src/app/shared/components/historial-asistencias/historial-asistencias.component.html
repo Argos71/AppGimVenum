@@ -1,0 +1,49 @@
+<app-header [isModal]="true" title="Historial de Asistencias"></app-header>
+
+<ion-content class="attendance-history">
+
+  <div class="history-wrapper">
+
+    <!-- LISTADO -->
+    <ion-card
+      class="attendance-card"
+      *ngFor="let asistencia of asistencias"
+    >
+
+      <div class="card-accent"></div>
+
+      <ion-card-content>
+
+        <div class="card-header">
+          <ion-icon name="checkmark-circle-outline"></ion-icon>
+          <div class="header-text">
+            <h3>Asistencia registrada</h3>
+            <span>{{ asistencia.diaCompleto }}</span>
+          </div>
+        </div>
+
+        <div class="card-info">
+          <div class="info-item">
+            <span class="label">Hora</span>
+            <span class="value">{{ asistencia.HoraAsistencia }}</span>
+          </div>
+
+          <div class="info-item">
+            <span class="label">ID</span>
+            <span class="value">#{{ asistencia.id }}</span>
+          </div>
+        </div>
+
+      </ion-card-content>
+    </ion-card>
+
+    <!-- ESTADO VACÍO -->
+    <div class="empty-state" *ngIf="asistencias.length === 0">
+      <ion-icon name="calendar-outline"></ion-icon>
+      <h2>Sin asistencias</h2>
+      <p>Aún no has registrado ninguna asistencia.</p>
+    </div>
+
+  </div>
+
+</ion-content>

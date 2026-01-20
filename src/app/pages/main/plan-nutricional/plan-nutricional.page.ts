@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { FirebaseService } from 'src/app/services/firebase.service';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Component({
   selector: 'app-plan-nutricional',
@@ -13,9 +15,32 @@ import { SharedModule } from 'src/app/shared/shared.module';
 
 export class PlanNutricionalPage implements OnInit {
 
+  firebaseSvc = inject(FirebaseService);
+  afAuth = inject(AngularFireAuth);
+
+  planNutricional: any = null;
+  userName: string = '';
+  showTips: boolean = false;
+
   constructor() { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    const user = await this.afAuth.currentUser;
+    if (user) {
+      const path = `users/${user.uid}`;
+      const userData = await this.firebaseSvc.getDocument(path);
+      this.planNutricional = userData?.['planNutricional'];
+      this.userName = userData?.['nombre'] || 'Usuario';
+      console.log('Usuario:', user.uid);
+      console.log('Datos del usuario:', userData);
+      console.log('Plan nutricional:', this.planNutricional);
+    } else {
+      console.log('No hay usuario logueado');
+    }
+  }
+
+  toggleTips() {
+    this.showTips = !this.showTips;
   }
 
 }

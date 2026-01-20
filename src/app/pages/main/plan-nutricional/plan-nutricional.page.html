@@ -1,13 +1,120 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>plan-nutricional</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header backButton="/main/home" title="Plan Nutricional">
+  <ion-icon name="nutrition-outline" slot="end"></ion-icon>
+</app-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="ion-padding">
   <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">plan-nutricional</ion-title>
+    <ion-toolbar color="danger">
+      <ion-title size="large">Plan Nutricional de {{ userName }}</ion-title>
+      <ion-icon name="restaurant-outline" slot="end" color="light"></ion-icon>
     </ion-toolbar>
   </ion-header>
+
+  <div *ngIf="!planNutricional" class="no-plan-container">
+    <ion-card color="light" class="no-plan-card">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="alert-circle-outline" slot="start"></ion-icon>
+          Sin Plan Asignado
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-text color="dark">
+          <h2>No tienes un plan nutricional asignado.</h2>
+          <p>Contacta a tu entrenador para obtener uno personalizado y alcanzar tus objetivos de salud.</p>
+        </ion-text>
+        <ion-button fill="outline" color="danger" expand="block" href="/main/contacts">
+          <ion-icon name="call-outline" slot="start"></ion-icon>
+          Contactar Entrenador
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <div *ngIf="planNutricional" class="plan-container">
+    <ion-card color="light" class="plan-card">
+      <ion-card-header>
+        <ion-card-title color="danger">
+          <ion-icon name="leaf-outline" slot="start"></ion-icon>
+          Tu Plan Nutricional Personalizado
+        </ion-card-title>
+        <ion-card-subtitle color="medium">
+          Diseñado específicamente para ti por tu entrenador
+        </ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="plan-content">
+          <pre class="plan-text">{{ planNutricional }}</pre>
+        </div>
+        <ion-button fill="clear" color="danger" expand="block" class="tips-button" (click)="toggleTips()">
+          <ion-icon name="bulb-outline" slot="start"></ion-icon>
+          {{ showTips ? 'Ocultar Consejos' : 'Mostrar Consejos para Seguir tu Plan' }}
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card *ngIf="showTips" color="light" class="tips-card">
+      <ion-card-header>
+        <ion-card-title color="danger">
+          <ion-icon name="bulb-outline" slot="start"></ion-icon>
+          Consejos para Seguir tu Plan Nutricional
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-item>
+            <ion-icon name="water-outline" slot="start" color="primary"></ion-icon>
+            <ion-label>
+              <h3>Hidrátate adecuadamente</h3>
+              <p>Bebe al menos 2 litros de agua al día para mantener tu cuerpo funcionando óptimamente.</p>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-icon name="restaurant-outline" slot="start" color="success"></ion-icon>
+            <ion-label>
+              <h3>Come frutas y verduras</h3>
+              <p>Incluye al menos 5 porciones diarias para obtener vitaminas y fibra esenciales.</p>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-icon name="scale-outline" slot="start" color="warning"></ion-icon>
+            <ion-label>
+              <h3>Controla las porciones</h3>
+              <p>Usa platos más pequeños y come despacio para evitar comer en exceso.</p>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-icon name="time-outline" slot="start" color="secondary"></ion-icon>
+            <ion-label>
+              <h3>Come a horas regulares</h3>
+              <p>Mantén horarios fijos para tus comidas para regular tu metabolismo.</p>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-icon name="fitness-outline" slot="start" color="tertiary"></ion-icon>
+            <ion-label>
+              <h3>Combina con ejercicio</h3>
+              <p>Une tu plan nutricional con rutinas de ejercicio para mejores resultados.</p>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-icon name="heart-outline" slot="start" color="danger"></ion-icon>
+            <ion-label>
+              <h3>Escucha a tu cuerpo</h3>
+              <p>Si sientes hambre, come; si no, no forces. La consistencia es más importante que la perfección.</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card color="danger" class="motivation-card">
+      <ion-card-content>
+        <ion-text color="light">
+          <h3><ion-icon name="heart-outline"></ion-icon> ¡Mantén la Motivación!</h3>
+          <p>Recuerda que la consistencia es clave. Combina este plan con tu rutina de ejercicios para obtener los mejores resultados.</p>
+        </ion-text>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>

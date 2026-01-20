@@ -29,6 +29,8 @@ import {
   ref,
   getDownloadURL,
 } from 'firebase/storage';
+import { getDocs } from 'firebase/firestore';
+
 
 @Injectable({
   providedIn: 'root',
@@ -109,6 +111,12 @@ export class FirebaseService {
     return this.firestore.doc(path).delete();
   }
 
+ async getCollection(path: string): Promise<any[]> {
+  const ref = collection(getFirestore(), path);
+  const snapshot = await getDocs(ref);
+  return snapshot.docs.map(doc => doc.data());
+}
+
   //=================Almacenamiento===============
 
   //====Subir imagen=====
@@ -120,3 +128,4 @@ export class FirebaseService {
     );
   }
 }
+

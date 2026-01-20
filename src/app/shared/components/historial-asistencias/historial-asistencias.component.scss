@@ -1,0 +1,127 @@
+.attendance-history {
+  --background: #000000;
+}
+
+.history-wrapper {
+  padding: 16px;
+}
+
+/* =========================
+   TARJETA DE ASISTENCIA
+========================= */
+.attendance-card {
+  position: relative;
+  border-radius: 16px;
+  margin-bottom: 14px;
+  background: #ffffff;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+/* Barra roja lateral */
+.card-accent {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 6px;
+  height: 100%;
+  background: #d32f2f;
+}
+
+/* =========================
+   HEADER
+========================= */
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+
+  ion-icon {
+    font-size: 28px;
+    color: #d32f2f;
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #111;
+  }
+
+  span {
+    font-size: 13px;
+    color: #666;
+  }
+}
+
+/* =========================
+   INFO
+========================= */
+.card-info {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+
+  .info-item {
+    display: flex;
+    flex-direction: column;
+    background: #f9f9f9;
+    padding: 10px 12px;
+    border-radius: 10px;
+    flex: 1;
+
+    .label {
+      font-size: 11px;
+      color: #888;
+      margin-bottom: 4px;
+    }
+
+    .value {
+      font-size: 14px;
+      font-weight: 600;
+      color: #000;
+    }
+  }
+}
+
+/* =========================
+   ESTADO VACÍO
+========================= */
+.empty-state {
+  margin-top: 60px;
+  text-align: center;
+  color: #666;
+
+  ion-icon {
+    font-size: 64px;
+    color: #d32f2f;
+    margin-bottom: 12px;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 20px;
+    color: #111;
+  }
+
+  p {
+    margin-top: 6px;
+    font-size: 14px;
+  }
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (min-width: 768px) {
+  .history-wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}

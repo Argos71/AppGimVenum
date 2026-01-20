@@ -1,0 +1,344 @@
+<app-header backButton="/main/home" title="Reportes del Sistema">
+  <ion-icon name="stats-chart-outline" slot="end"></ion-icon>
+</app-header>
+
+<ion-content [fullscreen]="true" class="reports-content">
+
+  <!-- Loading Spinner -->
+  <div *ngIf="loading" class="loading-container">
+    <ion-spinner name="crescent" color="danger"></ion-spinner>
+    <p>Cargando reportes...</p>
+  </div>
+
+  <!-- Contenido Principal -->
+  <div *ngIf="!loading" class="reports-container">
+
+    <!-- Alertas -->
+    <div *ngIf="alerts.length > 0" class="alerts-section">
+      <ion-card class="alerts-card">
+        <ion-card-header class="alerts-header">
+          <ion-card-title color="light">
+            <ion-icon name="warning-outline" slot="start"></ion-icon>
+            Alertas Importantes
+          </ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content class="alerts-content">
+          <ion-list class="alerts-list">
+            <ion-item *ngFor="let alert of alerts" class="alert-item" lines="none">
+              <ion-icon name="information-circle-outline" slot="start" color="danger"></ion-icon>
+              <ion-label class="alert-text">{{ alert }}</ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <!-- Estadísticas Generales -->
+    <ion-card class="stats-card">
+      <ion-card-header class="stats-header">
+        <ion-card-title color="light">
+          <ion-icon name="stats-chart-outline" slot="start"></ion-icon>
+          Estadísticas Generales
+        </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content class="stats-content">
+        <ion-grid class="stats-grid">
+          <ion-row class="stats-row">
+            <ion-col size="12" size-md="6" size-lg="12" class="stat-col">
+              <div class="stat-card stat-primary">
+                <div class="stat-icon">
+                  <ion-icon name="people-outline"></ion-icon>
+                </div>
+                <div class="stat-info">
+                  <h2>{{ totalUsers }}</h2>
+                  <p>Total de Usuarios</p>
+                </div>
+              </div>
+            </ion-col>
+
+            <ion-col size="12" size-md="6" size-lg="12" class="stat-col">
+              <div class="stat-card stat-success">
+                <div class="stat-icon">
+                  <ion-icon name="person-add-outline"></ion-icon>
+                </div>
+                <div class="stat-info">
+                  <h2>{{ totalInscritos }}</h2>
+                  <p>Usuarios Inscritos</p>
+                </div>
+              </div>
+            </ion-col>
+
+            <ion-col size="12" size-md="6" size-lg="12" class="stat-col">
+              <div class="stat-card stat-warning">
+                <div class="stat-icon">
+                  <ion-icon name="shield-checkmark-outline"></ion-icon>
+                </div>
+                <div class="stat-info">
+                  <h2>{{ totalAdmins }}</h2>
+                  <p>Administradores</p>
+                </div>
+              </div>
+            </ion-col>
+
+            <ion-col size="12" size-md="6" size-lg="12" class="stat-col">
+              <div class="stat-card stat-info">
+                <div class="stat-icon">
+                  <ion-icon name="calendar-number-outline"></ion-icon>
+                </div>
+                <div class="stat-info">
+                  <h2>{{ gymStats.totalAttendanceThisMonth }}</h2>
+                  <p>Asistencias Este Mes</p>
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Usuario Más Activo -->
+    <ion-card *ngIf="getUserWithMostHours()" class="highlight-card">
+      <ion-card-header class="highlight-header">
+        <ion-card-title color="light">
+          <ion-icon name="trophy-outline" slot="start"></ion-icon>
+          Usuario Más Activo
+        </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content class="highlight-content">
+        <div class="user-highlight">
+          <div class="user-avatar">
+            <ion-icon name="person-circle-outline"></ion-icon>
+          </div>
+          <div class="user-info">
+            <h3>{{ getUserWithMostHours()?.user.nombre }}</h3>
+            <p class="user-stats">{{ getUserWithMostHours()?.totalHours }} horas de entrenamiento</p>
+            <p class="user-attendance">{{ getUserWithMostHours()?.attendanceCount }} asistencias totales</p>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Estadísticas Avanzadas -->
+    <ion-card class="advanced-stats-card">
+      <ion-card-header class="advanced-header">
+        <ion-card-title color="light">
+          <ion-icon name="analytics-outline" slot="start"></ion-icon>
+          Estadísticas Avanzadas
+        </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content class="advanced-content">
+        <ion-grid class="advanced-grid">
+          <ion-row class="advanced-row">
+            <ion-col size="12" size-md="6" size-lg="4" class="advanced-col">
+              <div class="metric-card">
+                <div class="metric-icon">
+                  <ion-icon name="trending-up-outline"></ion-icon>
+                </div>
+                <div class="metric-info">
+                  <h3>{{ gymStats.averageAttendancePerUser | number:'1.1-1' }}</h3>
+                  <p>Promedio Asistencias/Usuario</p>
+                </div>
+              </div>
+            </ion-col>
+
+            <ion-col size="12" size-md="6" size-lg="4" class="advanced-col">
+              <div class="metric-card metric-warning">
+                <div class="metric-icon">
+                  <ion-icon name="time-outline"></ion-icon>
+                </div>
+                <div class="metric-info">
+                  <h3>{{ gymStats.membershipsExpiringSoon }}</h3>
+                  <p>Membresías por Vencer</p>
+                </div>
+              </div>
+            </ion-col>
+
+            <ion-col size="12" size-md="6" size-lg="4" class="advanced-col">
+              <div class="metric-card metric-success">
+                <div class="metric-icon">
+                  <ion-icon name="person-add-outline"></ion-icon>
+                </div>
+                <div class="metric-info">
+                  <h3>{{ gymStats.newUsersThisMonth }}</h3>
+                  <p>Nuevos Usuarios Este Mes</p>
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="advanced-row">
+            <ion-col size="12" size-md="6" class="advanced-col">
+              <div class="metric-card metric-money">
+                <div class="metric-icon">
+                  <ion-icon name="cash-outline"></ion-icon>
+                </div>
+                <div class="metric-info">
+                  <h3>Bs. {{ gymStats.totalRevenue | number }}</h3>
+                  <p>Ingresos Estimados</p>
+                </div>
+              </div>
+            </ion-col>
+
+            <ion-col size="12" size-md="6" class="advanced-col">
+              <div class="metric-card metric-time">
+                <div class="metric-icon">
+                  <ion-icon name="time-outline"></ion-icon>
+                </div>
+                <div class="metric-info">
+                  <h3>{{ gymStats.peakHour }}</h3>
+                  <p>Hora Pico de Actividad</p>
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="advanced-row">
+            <ion-col size="12" class="advanced-col">
+              <div class="metric-card metric-calendar">
+                <div class="metric-icon">
+                  <ion-icon name="calendar-outline"></ion-icon>
+                </div>
+                <div class="metric-info">
+                  <h3>{{ gymStats.mostPopularDay }}</h3>
+                  <p>Día Más Popular</p>
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+
+
+    <!-- Detalles de Usuarios -->
+    <ion-card class="users-card">
+      <ion-card-header class="users-header">
+        <ion-card-title color="light">
+          <ion-icon name="list-outline" slot="start"></ion-icon>
+          Detalles de Usuarios
+        </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content class="users-content">
+        <ion-list class="users-list">
+          <ion-item *ngFor="let report of usersReports" class="user-item" lines="none">
+            <div class="user-item-content">
+              <div class="user-main-info">
+                <div class="user-avatar">
+                  <ion-icon name="person-circle-outline"></ion-icon>
+                </div>
+                <div class="user-details">
+                  <h3 class="user-name">{{ report.user.nombre }}</h3>
+                  <div class="user-meta">
+                    <span class="user-type">{{ report.user.tipoMembresia }}</span>
+                    <span class="user-attendance">• {{ report.attendanceCount }} asistencias</span>
+                    <span class="user-hours">• {{ report.totalHours }} horas</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="user-status-section">
+                <div class="membership-status" [class]="'status-' + report.membershipStatus">
+                  <ion-icon [name]="report.membershipStatus === 'active' ? 'checkmark-circle' : report.membershipStatus === 'expiring' ? 'warning' : 'close-circle'"></ion-icon>
+                  <span>{{ report.membershipStatus === 'active' ? 'Activa' : report.membershipStatus === 'expiring' ? 'Por Vencer' : 'Vencida' }}</span>
+                </div>
+                <div class="days-info" *ngIf="report.daysUntilExpiry !== null && report.daysUntilExpiry >= 0">
+                  <small>{{ report.daysUntilExpiry }} días restantes</small>
+                </div>
+                <div class="last-attendance" *ngIf="report.lastAttendance">
+                  <small>Última: {{ formatDate(report.lastAttendance) }}</small>
+                </div>
+              </div>
+            </div>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Fechas de Membresía -->
+    <ion-card class="dates-card">
+      <ion-card-header class="dates-header">
+        <ion-card-title color="light">
+          <ion-icon name="calendar-outline" slot="start"></ion-icon>
+          Fechas de Membresía
+        </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content class="dates-content">
+        <ion-list class="dates-list">
+          <ion-item *ngFor="let report of usersReports" class="date-item" lines="none">
+            <div class="date-item-content">
+              <div class="user-info">
+                <ion-icon name="person-outline" slot="start" color="light"></ion-icon>
+                <div class="date-details">
+                  <h4>{{ report.user.nombre }}</h4>
+                  <div class="date-info">
+                    <p><strong>Inscripción:</strong> {{ formatDate(report.user.FechaInscripcion) }}</p>
+                    <p><strong>Finalización:</strong> {{ formatDate(report.user.FechaFinalizacion) }}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="membership-duration">
+                <ion-badge color="secondary">{{ report.user.mesesInscripcion }} meses</ion-badge>
+              </div>
+            </div>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Exportar por rango de fechas -->
+ <ion-card class="advanced-stats-card">
+      <ion-card-header class="dates-header">
+        <ion-card-title color="danger">
+          <ion-icon name="calendar-outline" slot="start"></ion-icon>
+          Fechas de Membresía
+        </ion-card-title>
+      </ion-card-header>
+  <ion-card-content>
+    <ion-grid>
+      <ion-row class="ion-justify-content-start">
+        <ion-col size="12">
+          <ion-item class="full-width-item">
+            <ion-label position="stacked">Desde</ion-label>
+            <ion-datetime
+              presentation="date"
+              [(ngModel)]="exportFromDate"
+              class="full-width-datetime">
+            </ion-datetime>
+          </ion-item>
+        </ion-col>
+      
+          <ion-item class="full-width-item">
+            <ion-label position="stacked">Hasta</ion-label>
+            <ion-datetime
+              presentation="date"
+              [(ngModel)]="exportToDate"
+              class="full-width-datetime">
+            </ion-datetime>
+          </ion-item>
+        
+
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12">
+          <ion-button expand="block" color="danger" (click)="exportToExcel()">
+            <ion-icon name="download-outline" slot="start"></ion-icon>
+            Exportar Excel
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
+    </ion-grid>
+  </ion-card-content>
+</ion-card>
+
+
+
+  </div>
+</ion-content>

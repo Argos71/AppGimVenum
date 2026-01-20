@@ -43,6 +43,10 @@ const routes: Routes = [
   {
     path: 'area-abdomen',
     loadChildren: () => import('./area-abdomen/area-abdomen.module').then( m => m.AreaAbdomenPageModule)
+  },
+  {
+    path: 'reportes',
+    loadComponent: () => import('./reportes/reportes.page').then( m => m.ReportesPage)
   }
 
 ];

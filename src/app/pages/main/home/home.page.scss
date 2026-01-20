@@ -1,0 +1,510 @@
+/* ======================================================
+   ESTILOS GENERALES PARA CARDS
+====================================================== */
+
+ion-card {
+  margin-bottom: 20px;
+  border-radius: 16px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+ion-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+.welcome-main-card {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 100%);
+  color: white;
+  animation: fadeIn 0.6s ease-in;
+  border: 2px solid #d32f2f;
+  position: relative;
+  overflow: hidden;
+}
+
+.welcome-main-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 30% 20%, rgba(211, 47, 47, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.motivation-badge {
+  margin-top: 12px;
+  --background: #d32f2f;
+  --color: white;
+  font-weight: bold;
+  border-radius: 20px;
+}
+
+.full-width-card {
+  margin: 16px 0;
+}
+
+.full-width-card2 {
+  margin: 16px 0;
+}
+
+.info-card {
+  text-align: center;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 12px;
+}
+
+.info-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.info-card ion-card-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: white;
+  font-weight: bold;
+}
+
+.info-card ion-card-content {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+}
+
+.divider {
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, #d32f2f 50%, transparent 100%);
+  margin: 16px 0;
+  border-radius: 1px;
+}
+
+ion-card[color="dark"] {
+  background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 100%);
+  border: 1px solid #333;
+  color: white;
+}
+
+ion-card[color="dark"] ion-item {
+  --background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+}
+
+ion-card[color="dark"] ion-card-content h2 {
+  color: white;
+}
+
+ion-card[color="dark"] ion-card-content p {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+ion-button {
+  --border-radius: 12px;
+  font-weight: 600;
+  text-transform: none;
+  transition: all 0.2s ease;
+}
+
+ion-button:hover {
+  transform: scale(1.02);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ======================================================
+   CALENDARIO SEMANAL DE ASISTENCIAS
+====================================================== */
+
+.attendance-week {
+  margin-top: 12px;
+}
+
+.attendance-week .week-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 8px 4px;
+  gap: 4px;
+}
+
+.attendance-week ion-col {
+  padding: 0 2px;
+  flex: 1;
+  min-width: 40px;
+  max-width: 50px;
+}
+
+.attendance-week .day-box {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: linear-gradient(135deg, #333 0%, #555 100%);
+  color: #fff;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 600;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.attendance-week .day-icon {
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+
+/* ASISTIÓ */
+.attendance-week .day-box.attended {
+  background: linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%);
+  box-shadow: 0 4px 12px rgba(211, 47, 47, 0.4);
+}
+
+/* NO ASISTIÓ */
+.attendance-week .day-box.not-attended {
+  background: linear-gradient(135deg, #424242 0%, #212121 100%);
+}
+
+/* HOY */
+.attendance-week .day-box.today {
+  border: 2px solid #ff4444;
+  transform: scale(1.1);
+  box-shadow: 0 0 15px rgba(255, 68, 68, 0.6);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1.1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1.1); }
+}
+
+.attendance-week .day-box small {
+  font-size: 9px;
+  opacity: 0.8;
+}
+
+/* ======================================================
+   RESPONSIVIDAD
+====================================================== */
+
+@media (max-width: 768px) {
+  ion-card {
+    margin-bottom: 16px;
+  }
+
+  .info-card {
+    margin-bottom: 8px;
+  }
+
+  .attendance-week .day-box {
+    font-size: 10px;
+  }
+
+  .attendance-week .day-icon {
+    font-size: 12px;
+  }
+
+  ion-col {
+    padding: 4px;
+  }
+}
+
+@media (min-width: 769px) {
+  .main-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+}
+
+/* ======================================================
+   CHARTS SECTION STYLES
+====================================================== */
+
+.charts-section {
+  margin-bottom: 24px;
+  animation: slideInFromTop 0.8s ease-out;
+}
+
+.charts-card {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  border: 1px solid rgba(211, 47, 47, 0.3);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #d32f2f, #ff5722, #d32f2f);
+  }
+
+  ion-card-header {
+    padding: 20px 20px 16px;
+    background: rgba(211, 47, 47, 0.05);
+    border-bottom: 1px solid rgba(211, 47, 47, 0.2);
+  }
+
+  ion-card-title {
+    font-size: 1.4em;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    ion-icon {
+      color: #d32f2f;
+      font-size: 1.5em;
+    }
+  }
+
+  ion-card-content {
+    padding: 24px 20px;
+  }
+}
+
+.chart-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  margin-top: 16px;
+}
+
+.chart-container {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #d32f2f, #ff5722);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(211, 47, 47, 0.2);
+    border-color: rgba(211, 47, 47, 0.3);
+
+    &::before {
+      transform: scaleX(1);
+    }
+  }
+
+  h3 {
+    color: #fff;
+    margin-bottom: 20px;
+    font-size: 1.1em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40px;
+      height: 2px;
+      background: linear-gradient(90deg, #d32f2f, #ff5722);
+      border-radius: 1px;
+    }
+  }
+
+  canvas {
+    max-width: 100%;
+    height: auto;
+    max-height: 280px;
+    border-radius: 8px;
+  }
+}
+
+/* Stats Cards Grid */
+.stats-overview {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat-card-small {
+  background: linear-gradient(135deg, rgba(211, 47, 47, 0.1) 0%, rgba(211, 47, 47, 0.05) 100%);
+  border: 1px solid rgba(211, 47, 47, 0.2);
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(211, 47, 47, 0.15);
+    border-color: rgba(211, 47, 47, 0.4);
+  }
+
+  .stat-value {
+    font-size: 2em;
+    font-weight: 700;
+    color: #d32f2f;
+    margin-bottom: 8px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  }
+
+  .stat-label {
+    font-size: 0.9em;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+}
+
+/* Animations */
+@keyframes slideInFromTop {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .chart-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .charts-card {
+    margin: 0 8px 20px;
+
+    ion-card-header {
+      padding: 16px;
+    }
+
+    ion-card-title {
+      font-size: 1.2em;
+    }
+
+    ion-card-content {
+      padding: 20px 16px;
+    }
+  }
+
+  .chart-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .chart-container {
+    padding: 16px;
+
+    h3 {
+      font-size: 1em;
+      margin-bottom: 16px;
+    }
+
+    canvas {
+      max-height: 220px;
+    }
+  }
+
+  .stats-overview {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .stat-card-small {
+    padding: 12px;
+
+    .stat-value {
+      font-size: 1.5em;
+    }
+
+    .stat-label {
+      font-size: 0.8em;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-overview {
+    grid-template-columns: 1fr;
+  }
+
+  .chart-container {
+    padding: 12px;
+
+    h3 {
+      font-size: 0.9em;
+    }
+  }
+}

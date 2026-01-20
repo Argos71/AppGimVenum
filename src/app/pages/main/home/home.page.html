@@ -51,17 +51,7 @@
         <ion-icon slot="start" name="document-text-outline"></ion-icon>
         <ion-label>Ver Reportes</ion-label>
       </ion-item>
-
-      <ion-item
-        *ngIf="usuarioMembresia == 'Administrador'"
-        button
-        menuClose
-        (click)="goToSignUp()"
-        color="danger"
-      >
-        <ion-icon slot="start" name="bar-chart-outline"></ion-icon>
-        <ion-label>Ver gráficas</ion-label>
-      </ion-item>
+    
     </ion-list>
   </ion-content>
 </ion-menu>
@@ -117,23 +107,222 @@
 </ion-menu>
 
 <!-- ==================== CONTENIDO PRINCIPAL ==================== -->
-<ion-content id="main-content" class="ion-padding">
+<ion-content id="main-content" class="ion-padding" [fullscreen]="true">
+
+  <!-- GRAFICOS DE REPORTES PARA ADMINISTRADORES -->
+  <div *ngIf="usuarioMembresia == 'Administrador'" class="charts-section">
+    <!-- Estadísticas Rápidas -->
+    <div class="stats-overview">
+      <div class="stat-card-small">
+        <div class="stat-value">{{ totalUsers }}</div>
+        <div class="stat-label">Total Usuarios</div>
+      </div>
+      <div class="stat-card-small">
+        <div class="stat-value">{{ totalInscritos }}</div>
+        <div class="stat-label">Usuarios Activos</div>
+      </div>
+      <div class="stat-card-small">
+        <div class="stat-value">{{ totalAdmins }}</div>
+        <div class="stat-label">Administradores</div>
+      </div>
+      <div class="stat-card-small">
+        <div class="stat-value">{{ gymStats?.totalAttendanceThisMonth || 0 }}</div>
+        <div class="stat-label">Asistencias Este Mes</div>
+      </div>
+      <div class="stat-card-small">
+        <div class="stat-value">{{ gymStats?.newUsersThisMonth || 0 }}</div>
+        <div class="stat-label">Nuevos Usuarios</div>
+      </div>
+      <div class="stat-card-small">
+        <div class="stat-value">{{ gymStats?.membershipsExpiringSoon || 0 }}</div>
+        <div class="stat-label">Membresías por Vencer</div>
+      </div>
+    </div>
+
+    <!-- Loading Spinner for Charts -->
+    <div *ngIf="chartsLoading" class="charts-loading-container">
+      <ion-spinner name="crescent" color="danger"></ion-spinner>
+      <p>Cargando gráficas...</p>
+    </div>
+
+    <!-- Gráficos Principales -->
+    <ion-card *ngIf="!chartsLoading" class="charts-card">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="bar-chart-outline" slot="start"></ion-icon>
+          Análisis y Tendencias
+        </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <div class="chart-grid">
+          <div class="chart-container">
+            <h3>Distribución de Asistencias por Membresía</h3>
+            <canvas baseChart
+                    [data]="pieChartData"
+                    [options]="pieChartOptions"
+                    [type]="pieChartType">
+            </canvas>
+          </div>
+
+          <div class="chart-container">
+            <h3>Asistencias Semanales</h3>
+            <canvas baseChart
+                    [data]="barChartData"
+                    [options]="barChartOptions"
+                    [type]="barChartType">
+            </canvas>
+          </div>
+
+          <div class="chart-container">
+            <h3>Crecimiento de Usuarios</h3>
+            <canvas baseChart
+                    [data]="lineChartData"
+                    [options]="lineChartOptions"
+                    [type]="lineChartType">
+            </canvas>
+          </div>
+
+         
+          <div class="chart-container">
+            <h3>Membresías por Vencer (30 días)</h3>
+            <canvas baseChart
+                    [data]="areaChartData"
+                    [options]="areaChartOptions"
+                    [type]="areaChartType">
+            </canvas>
+          </div>
+
+          <div class="chart-container">
+            <h3>Asistencias por Día de la Semana</h3>
+            <canvas baseChart
+                    [data]="radarChartData"
+                    [options]="radarChartOptions"
+                    [type]="radarChartType">
+            </canvas>
+          </div>
+
+          <div class="chart-container">
+            <h3>Tendencias de Ingresos</h3>
+            <canvas baseChart
+                    [data]="revenueChartData"
+                    [options]="revenueChartOptions"
+                    [type]="revenueChartType">
+            </canvas>
+          </div>
+
+          <div class="chart-container">
+            <h3>Actividad por Hora del Día</h3>
+            <canvas baseChart
+                    [data]="activityHeatmapData"
+                    [options]="activityHeatmapOptions"
+                    [type]="activityHeatmapType">
+            </canvas>
+          </div>
+
+          <div class="chart-container">
+            <h3>Estado de Membresías</h3>
+            <canvas baseChart
+                    [data]="membershipStatusData"
+                    [options]="membershipStatusOptions"
+                    [type]="membershipStatusType">
+            </canvas>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- CARD DE BIENVENIDA -->
+  <ion-card color="dark" class="welcome-main-card">
+    <ion-card-header>
+      <ion-card-title color="light">
+        <ion-icon name="fitness-outline" slot="start"></ion-icon>
+        ¡Bienvenido de vuelta, {{ usuarioNombre }}!
+      </ion-card-title>
+      <ion-card-subtitle color="light">
+        <ion-icon name="calendar-outline" slot="start"></ion-icon>
+        Hoy es un gran día para entrenar
+      </ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <p color="light">Mantén tu rutina y alcanza tus metas en el Gimnasio Venum.</p>
+      <ion-badge color="danger" class="motivation-badge">
+        <ion-icon name="flame-outline"></ion-icon>
+        ¡Sigue adelante!
+      </ion-badge>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- CARD: Recordatorio de Asistencia -->
+  <ion-card class="full-width-card" color="dark">
+    <ion-item color="light">
+      <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
+      <ion-label color="dark">
+        <h2><strong>Registro de Asistencia</strong></h2>
+      </ion-label>
+    </ion-item>
+    <ion-card-content>
+      <h2>Recuerda que es importante realizar el registro de tus asistencias para mantener un control preciso.</h2>
+      <div class="divider"></div>
+      <ion-row class="ion-margin-top">
+        <ion-col size="12">
+          <ion-button
+            size="large"
+            color="danger"
+            expand="block"
+            shape="round"
+            (click)="goRegistrarAsis()">
+            <ion-icon name="checkmark-done-outline" slot="start"></ion-icon>
+            Registrar mi asistencia
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+
   <!-- CARD: Días Asistidos -->
   <ion-card class="full-width-card" color="dark">
     <ion-item color="light">
-      <ion-label color="dark">
-        <h2><strong>Días Asistidos</strong></h2>
+      <ion-icon name="calendar-outline" slot="start"></ion-icon>
+      <ion-label color="light">
+        <h2 style="color: rgb(0, 0, 0);"><strong>Días Asistidos Esta Semana</strong></h2>
       </ion-label>
     </ion-item>
 
     <ion-card-content>
-      <ion-grid>
-        <ion-row class="week-row">
+      <ion-grid class="attendance-week">
+        <!-- Fila de días -->
+        <ion-row class="week-row ion-justify-content-center">
           <ion-col *ngFor="let day of week" size="auto">
-            <div [ngClass]="{'day-box': true, 'today': day.isToday}">
-              {{ day.name }} <br />
+            <div
+              class="day-box"
+              [ngClass]="{
+                'attended': day.attended,
+                'not-attended': !day.attended,
+                'today': day.isToday
+              }"
+            >
+              <ion-icon *ngIf="day.attended" name="checkmark-circle" class="day-icon"></ion-icon>
+              <ion-icon *ngIf="!day.attended && !day.isToday" name="close-circle" class="day-icon"></ion-icon>
+              <ion-icon *ngIf="day.isToday" name="today-outline" class="day-icon"></ion-icon>
+              {{ day.name }}
               <small>{{ day.date }}</small>
             </div>
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="ion-padding">
+          <ion-col size="12">
+            <ion-button
+              size="large"
+              color="danger"
+              expand="block"
+              shape="round"
+              (click)="goHistorialAsis()">
+              <ion-icon name="list-outline" slot="start"></ion-icon>
+              Ver Historial Completo
+            </ion-button>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -147,8 +336,9 @@
     color="dark"
   >
     <ion-item color="light">
-      <ion-label color="dark">
-        <h2><strong>Tus Datos Principales</strong></h2>
+      <ion-icon name="stats-chart-outline" slot="start"></ion-icon>
+      <ion-label color="light">
+        <h2 style="color: rgb(0, 0, 0);"><strong>Tus Estadísticas Personales</strong></h2>
       </ion-label>
     </ion-item>
 
@@ -158,9 +348,10 @@
           <ion-card class="info-card">
             <ion-card-header>
               <ion-card-title>
-                <ion-text color="danger"
-                  ><strong>{{usuarioTalla}} cm</strong></ion-text
-                >
+                <ion-icon name="body-outline" color="danger" slot="start"></ion-icon>
+                <ion-text color="danger">
+                  <strong>{{usuarioTalla}} cm</strong>
+                </ion-text>
               </ion-card-title>
             </ion-card-header>
             <ion-card-content><strong>Estatura</strong></ion-card-content>
@@ -171,9 +362,10 @@
           <ion-card class="info-card">
             <ion-card-header>
               <ion-card-title>
-                <ion-text color="danger"
-                  ><strong>{{usuarioPeso}} Kg</strong></ion-text
-                >
+                <ion-icon name="scale-outline" color="danger" slot="start"></ion-icon>
+                <ion-text color="danger">
+                  <strong>{{usuarioPeso}} Kg</strong>
+                </ion-text>
               </ion-card-title>
             </ion-card-header>
             <ion-card-content><strong>Peso</strong></ion-card-content>
@@ -186,9 +378,10 @@
           <ion-card class="info-card">
             <ion-card-header>
               <ion-card-title>
-                <ion-text color="danger"
-                  ><strong>{{UsuarioImc}}</strong></ion-text
-                >
+                <ion-icon name="calculator-outline" color="danger" slot="start"></ion-icon>
+                <ion-text color="danger">
+                  <strong>{{UsuarioImc}}</strong>
+                </ion-text>
               </ion-card-title>
             </ion-card-header>
             <ion-card-content><strong>IMC</strong></ion-card-content>
@@ -199,9 +392,10 @@
           <ion-card class="info-card">
             <ion-card-header>
               <ion-card-title>
-                <ion-text color="danger"
-                  ><strong>{{UsuarioVasos}}</strong></ion-text
-                >
+                <ion-icon name="water-outline" color="danger" slot="start"></ion-icon>
+                <ion-text color="danger">
+                  <strong>{{UsuarioVasos}}</strong>
+                </ion-text>
               </ion-card-title>
             </ion-card-header>
             <ion-card-content>
@@ -212,26 +406,55 @@
         </ion-col>
       </ion-row>
     </ion-grid>
+
+    <ion-card-content>
+      <ion-button
+        size="large"
+        color="danger"
+        expand="block"
+        shape="round"
+        (click)="goPlanNutricional()">
+        <ion-icon name="nutrition-outline" slot="start"></ion-icon>
+        Ver Plan Nutricional
+      </ion-button>
+    </ion-card-content>
   </ion-card>
 
   <!-- CARD: Áreas de Entrenamiento -->
   <ion-card class="full-width-card" color="dark">
     <ion-item color="light">
-      <ion-label color="dark">
-        <h2><strong>Áreas que puedes trabajar</strong></h2>
+      <ion-icon name="barbell-outline" slot="start"></ion-icon>
+      <ion-label color="light">
+        <h2 style="color: rgb(0, 0, 0);"><strong>Áreas de Entrenamiento Disponibles</strong></h2>
       </ion-label>
     </ion-item>
 
     <ion-card-content>
-      <ion-button
-        (click)="goCategoria()"
-        size="large"
-        color="light"
-        expand="block"
-        shape="round"
-      >
-        Ver Áreas
-      </ion-button>
+      <p style="color: rgba(255, 255, 255, 0.8);">Explora las diferentes áreas musculares que puedes trabajar en tu rutina.</p>
+      <ion-row>
+        <ion-col size="12" size-md="6">
+          <ion-button
+            fill="outline"
+            color="danger"
+            expand="block"
+            shape="round"
+            (click)="goCategoria()">
+            <ion-icon name="fitness-outline" slot="start"></ion-icon>
+            Ver Todas las Áreas
+          </ion-button>
+        </ion-col>
+        <ion-col size="12" size-md="6">
+          <ion-button
+            fill="solid"
+            color="danger"
+            expand="block"
+            shape="round"
+            (click)="goCategoria()">
+            <ion-icon name="play-outline" slot="start"></ion-icon>
+            Comenzar Entrenamiento
+          </ion-button>
+        </ion-col>
+      </ion-row>
     </ion-card-content>
   </ion-card>
 </ion-content>

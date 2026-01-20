@@ -1,0 +1,80 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.attendance-modal {
+  --background: linear-gradient(180deg, #000000 0%, #0d0d0d 100%);
+}
+
+.attendance-wrapper {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.attendance-card {
+  width: 100%;
+  max-width: 420px;
+  background: #000;
+  border-radius: 20px;
+  padding: 32px 24px;
+  border: 2px solid #d10000;
+  box-shadow: 0 0 40px rgba(209, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  text-align: center;
+}
+
+/* TEXTO SUPERIOR */
+.attendance-text h2 {
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+/* BLOQUES */
+.label {
+  font-size: 0.7rem;
+  letter-spacing: 3px;
+  color: #aaa;
+}
+
+/* HORA */
+.attendance-time .time {
+  font-size: clamp(2.8rem, 6vw, 3.4rem);
+  font-weight: 800;
+  color: #ffffff;
+}
+
+/* FECHA */
+.attendance-date .date {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #e0e0e0;
+  text-transform: uppercase;
+}
+
+/* BOTÓN */
+.attendance-btn {
+  margin-top: 12px;
+  height: 52px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* RESPONSIVE EXTRA (pantallas muy pequeñas) */
+@media (max-height: 650px) {
+  .attendance-card {
+    padding: 24px 18px;
+    gap: 20px;
+  }
+
+  .attendance-time .time {
+    font-size: 2.4rem;
+  }
+}
