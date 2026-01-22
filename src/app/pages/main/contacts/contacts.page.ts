@@ -137,7 +137,7 @@ export class ContactsPage implements OnInit {
   }
 
   abrirFacebook() {
-    window.open('https://www.facebook.com/GimnasioVenum', '_blank');
+    window.open('https://www.facebook.com/share/171DkeZ3m9/', '_blank');
   }
 
   abrirInstagram() {

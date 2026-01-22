@@ -5,7 +5,7 @@
     <div class="hero-overlay"></div>
     <div class="hero-content">
       <div class="hero-icon">
-        <ion-icon name="person-add-circle" class="pulse-icon"></ion-icon>
+        <ion-icon name="person-add" class="pulse-icon"></ion-icon>
       </div>
       <h1 class="hero-title">{{ user ? 'Editar Usuario' : 'Nuevo Usuario' }}</h1>
       <p class="hero-subtitle">{{ user ? 'Actualiza la información del usuario' : 'Registra un nuevo miembro en el gimnasio' }}</p>
@@ -194,7 +194,7 @@
 
             <div class="input-group">
               <app-custom-input
-                icon="calendar-checkmark"
+                icon="calendar"
                 [control]="form.controls.FechaFinalizacion"
                 type="date"
                 label="Fecha de Finalización"
@@ -284,7 +284,7 @@
       <!-- Submit Button -->
       <div class="submit-section">
         <ion-button
-          color="primary"
+          color="light"
           expand="block"
           mode="ios"
           class="submit-button"
