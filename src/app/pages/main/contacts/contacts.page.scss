@@ -1,0 +1,220 @@
+.contacts-content {
+  --padding-top: 16px;
+  --padding-bottom: 24px;
+}
+
+/* ================= Institucional ================= */
+.institutional-card {
+  background: #ffffff;
+  border-radius: 16px;
+  border-left: 5px solid #b11226;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+
+  ion-card-header {
+    text-align: center;
+    padding-bottom: 10px;
+  }
+
+  ion-card-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1f1f1f;
+  }
+
+  ion-card-subtitle {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-top: 4px;
+  }
+
+  ion-card-content {
+    padding-top: 10px;
+  }
+
+  .info-block {
+    padding: 14px 16px;
+    margin-top: 12px;
+    background: #f5f5f5;
+    border-radius: 12px;
+
+    h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #b11226;
+      margin-bottom: 6px;
+    }
+
+    p {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #333333;
+      margin: 0;
+    }
+  }
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+  .institutional-card {
+    ion-card-title {
+      font-size: 1.3rem;
+    }
+
+    .info-block {
+      padding: 12px;
+    }
+  }
+}
+
+
+/* ================= Mapa ================= */
+.map-card {
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
+
+  ion-card-title {
+    text-align: center;
+    font-weight: 600;
+    color: #b11226;
+  }
+}
+
+.map-content {
+  padding: 0;
+}
+
+.map-wrapper {
+  width: 100%;
+  height: 280px;
+
+  iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+  .map-wrapper {
+    height: 220px;
+  }
+}
+
+
+/* ================= Contactos ================= */
+.contact-grid {
+  margin-top: 10px;
+}
+
+.contact-card {
+  text-align: center;
+  padding: 20px;
+  border-radius: 16px;
+  height: 100%;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  ion-icon {
+    font-size: 2.4rem;
+    color: #b11226;
+    margin-bottom: 10px;
+  }
+
+  h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+
+  p {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 14px;
+  }
+
+  .small-text {
+    font-size: 0.85rem;
+  }
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+  }
+}
+
+/* ================= Redes Sociales ================= */
+.social-card {
+  border-radius: 18px;
+  text-align: center;
+
+  ion-card-title {
+    font-weight: 600;
+    color: #b11226;
+  }
+}
+
+.social-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.social-btn {
+  --background: #b11226;
+  --color: #ffffff;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  padding: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  ion-icon {
+    font-size: 34px;   // 🔥 AQUÍ ESTÁ LA CLAVE
+  }
+}
+
+/* Colores individuales */
+.facebook {
+  --background: #1877f2;
+}
+
+.instagram {
+  --background: linear-gradient(
+    45deg,
+    #f58529,
+    #dd2a7b,
+    #8134af,
+    #515bd4
+  );
+}
+
+.whatsapp {
+  --background: #25d366;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+  .social-btn {
+    width: 60px;
+    height: 60px;
+
+    ion-icon {
+      font-size: 30px;
+    }
+  }
+}
+
+/* ================= Responsive ================= */
+@media (max-width: 576px) {
+  .map-wrapper {
+    height: 220px;
+  }
+
+  .social-buttons ion-button {
+    width: 52px;
+    height: 52px;
+  }
+}

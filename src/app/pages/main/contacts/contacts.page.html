@@ -1,83 +1,110 @@
-<!-- =================== Encabezado =================== -->
+<app-header backButton="/main/home" title="Contactos"></app-header>
 
-  <app-header backButton="/main/home" title="Contactos"></app-header>
+<ion-content class="contacts-content">
+
+  <!-- =================== Información Institucional =================== -->
+ <ion-card class="institutional-card">
+  <ion-card-header>
+    <ion-card-title>Cadena de Gimnasios Venum</ion-card-title>
+    <ion-card-subtitle>
+      Entrenamiento • Salud • Bienestar
+    </ion-card-subtitle>
+  </ion-card-header>
+
+  <ion-card-content>
+    <div class="info-block">
+      <h3>Misión</h3>
+      <p>
+        Brindar a nuestros miembros un espacio de entrenamiento de alta calidad,
+        con planes personalizados, equipos modernos y un ambiente motivador.
+      </p>
+    </div>
+
+    <div class="info-block">
+      <h3>Visión</h3>
+      <p>
+        Consolidarnos como una cadena de gimnasios líder, promoviendo el bienestar
+        integral y el desarrollo físico de nuestros usuarios.
+      </p>
+    </div>
+  </ion-card-content>
+</ion-card>
 
 
-<!-- =================== Contenido principal =================== -->
-<ion-content id="main-content" class="ion-padding">
+  <!-- =================== Ubicación =================== -->
+  <ion-card class="map-card">
+    <ion-card-header>
+      <ion-card-title>Nuestra Ubicación</ion-card-title>
+    </ion-card-header>
 
-  <!-- Google Maps -->
-  <ion-item color="dark" class="ion-padding">
-    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3890.450127057327!2d-68.1743089!3d-16.4911103!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x915edf0075a50f5b%3A0xe81da03d69f2a617!2sInstituto%20Tecnologico%20Franfer!5e1!3m2!1ses-419!2sbo!4v1748829916528!5m2!1ses-419!2sbo" 
-            width="400" height="300" style="border:0;" allowfullscreen loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"></iframe>
-  </ion-item>
+    
+    <ion-card-content>
+      <div class="map-wrapper">
+        <iframe
+  src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3890.450127057327!2d-68.1743089!3d-16.4911103!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x915edf0075a50f5b%3A0xe81da03d69f2a617!2sInstituto%20Tecnologico%20Franfer!5e0!3m2!1ses-419!2sbo!4v1748829916528"
+  loading="lazy"
+  referrerpolicy="no-referrer-when-downgrade">
+</iframe>
 
-  <!-- Teléfono -->
-  <ion-item color="dark" lines="full">
-    <ion-icon name="call-outline" slot="start" color="primary"></ion-icon>
-    <ion-label>
-      <h2>Teléfono</h2>
-      <p>+591 71234567</p>
-    </ion-label>
-    <ion-button fill="clear" color="success" (click)="llamar()">
-      <ion-icon name="call" slot="icon-only"></ion-icon>
-    </ion-button>
-  </ion-item>
+      </div>
+    </ion-card-content>
+  </ion-card>
 
-  <!-- Correo -->
-  <ion-item color="dark" lines="full">
-    <ion-icon name="mail-outline" slot="start" color="primary"></ion-icon>
-    <ion-label>
-      <h2>Email</h2>
-      <p>josejeffersonjust&#64;gmail.com</p>
-    </ion-label>
-    <ion-button fill="clear" (click)="enviarCorreo()">
-      <ion-icon name="send-outline" slot="icon-only"></ion-icon>
-    </ion-button>
-  </ion-item>
+  <!-- =================== Información de Contacto =================== -->
+  <ion-grid class="contact-grid">
+    <ion-row>
 
-  <!-- Dirección -->
-  <ion-item color="dark" lines="full">
-    <ion-icon name="location-outline" slot="start" color="primary"></ion-icon>
-    <ion-label>
-      <h2>Ubicación</h2>
-      <p>Zona Ballivián, calle Sargento Carrasco Nro. 25, entre Av. Alfonzo Ugarte y calle Fournier, ciudad El Alto</p>
-    </ion-label>
-    <ion-button fill="clear" (click)="abrirMapa()">
-      <ion-icon name="navigate" slot="icon-only"></ion-icon>
-    </ion-button>
-  </ion-item>
-
-  <p></p>
-  <!-- Redes Sociales -->
-  <ion-item>
-    <ion-label>    
-      <ion-label color="danger">Redes Sociales</ion-label>
-    </ion-label>
-  </ion-item>
- 
-<ion-item>
-  <ion-grid>
-    <ion-row class="ion-justify-content-around">
-      <ion-col size="3" class="ion-text-center">
-        <ion-button fill="clear" (click)="abrirFacebook()">
-          <ion-icon name="logo-facebook" size="large" color="primary"></ion-icon>
-        </ion-button>
+      <ion-col size="12" size-md="4">
+        <ion-card class="contact-card">
+          <ion-icon name="call-outline"></ion-icon>
+          <h2>Teléfono</h2>
+          <p>+591 71234567</p>
+          <ion-button expand="block" color="danger" (click)="llamar()">
+            Llamar
+          </ion-button>
+        </ion-card>
       </ion-col>
-      <ion-col size="3" class="ion-text-center">
-        <ion-button fill="clear" (click)="abrirInstagram()">
-          <ion-icon name="logo-instagram" size="large" color="danger"></ion-icon>
-        </ion-button>
+
+      
+
+      <ion-col size="12" size-md="4">
+        <ion-card class="contact-card">
+          <ion-icon name="location-outline"></ion-icon>
+          <h2>Dirección</h2>
+          <p class="small-text">
+            Zona Ballivián, Calle Sargento Carrasco N°25, El Alto
+          </p>
+          <ion-button expand="block" fill="outline" color="danger" (click)="abrirMapa()">
+            Ver en mapa
+          </ion-button>
+        </ion-card>
       </ion-col>
-      <ion-col size="3" class="ion-text-center">
-        <ion-button fill="clear" (click)="abrirWhatsApp()">
-          <ion-icon name="logo-whatsapp" size="large" color="success"></ion-icon>
-        </ion-button>
-      </ion-col>
+
     </ion-row>
   </ion-grid>
-</ion-item>
-  
+
+  <!-- =================== Redes Sociales =================== -->
+  <ion-card class="social-card">
+  <ion-card-header>
+    <ion-card-title>Síguenos en redes</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    <div class="social-buttons">
+      <ion-button class="social-btn facebook" (click)="abrirFacebook()">
+        <ion-icon name="logo-facebook"></ion-icon>
+      </ion-button>
+
+      <ion-button class="social-btn instagram" (click)="abrirInstagram()">
+        <ion-icon name="logo-instagram"></ion-icon>
+      </ion-button>
+
+      <ion-button class="social-btn whatsapp" (click)="abrirWhatsApp()">
+        <ion-icon name="logo-whatsapp"></ion-icon>
+      </ion-button>
+    </div>
+  </ion-card-content>
+</ion-card>
+
 
 </ion-content>
